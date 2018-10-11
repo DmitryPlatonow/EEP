@@ -42,9 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\EncryptionService.cs" />
+    <Compile Include="Classes\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkClasses\WorkWithUser.cs" />
+    <Compile Include="WorkClasses\UserContext.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EEP.DAL\EEP.DAL.csproj">
+      <Project>{5e26596e-e702-4f76-9cc8-8da8967567fd}</Project>
+      <Name>EEP.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EEP.Entities\EEP.Entities.csproj">
+      <Project>{85B97BBE-ED7F-4BAE-BD2C-3A8D537BBD3D}</Project>
+      <Name>EEP.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

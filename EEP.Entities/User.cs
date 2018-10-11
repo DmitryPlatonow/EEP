@@ -32,6 +32,9 @@ namespace EEP.Entities
         [Required]
         public Position Position { get; set; }
 
+        [Required]
+        public bool IsLocked { get; set; }
+
         public DateTime? DateCreated { get; set; }
 
         public virtual Role Role { get; set; }
