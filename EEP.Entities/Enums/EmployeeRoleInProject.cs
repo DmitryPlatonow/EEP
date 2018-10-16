@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace EEP.Entities.Enums
 {
-    public enum Position
+    public enum EmployeeRoleInProject
     {
+        None = 0,
         FrontEndDeveloper = 1,
         BackEndDeveloper = 2,
-        FullStackDeveloper = 4,
-        Designer = 8,
-        HRManager = 16,
+        FullStackDeveloper = 3,
+        Designer = 4,
     }
 }

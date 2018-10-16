@@ -6,125 +6,139 @@ using System.Linq;
 using EEP.BL.WorkClasses;
 using System.Security.Principal;
 using EEP.DAL.Repository.Extensions;
+using EEP.DAL.Repository.Interfaces;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using EEP.DAL;
+using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
-    public class UserService
+    public class UserService : IDisposable
     {
-
-        private readonly GenericRepository<User> _userRepository;
-        private readonly GenericRepository<Role> _roleRepository;
-        private readonly GenericRepository<Employee> _employeeRepository;
-        private readonly EncryptionService _encryptionService;
         private readonly UnitOfWork _unitOfWork;
+        private readonly EncryptionService _encryptionService;
 
-        public UserService(GenericRepository<User> userRepository, GenericRepository<Role> roleRepository,
-        GenericRepository<Employee> employeeRepository, EncryptionService encryptionService, UnitOfWork unitOfWork)
+        //kostillll popravit
+       // private readonly EEPDbContext _db;
+
+        private UserManager<IdentityUser> _userManager;
+
+        public UserService()
         {
-            _userRepository = userRepository;
-            _roleRepository = roleRepository;
-            _employeeRepository = employeeRepository;
-            _encryptionService = encryptionService;
-            _unitOfWork = unitOfWork;
+            _unitOfWork = new UnitOfWork();
+            _encryptionService = new EncryptionService();
+            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
         }
 
-        public UserContext ValidateUser(string email, string password)
+        //public UserContext ValidateUser(string email, string password)
+        //{
+        //    var userContext = new UserContext();
+
+        //    var user = _unitOfWork.UserRepository.GetSingleByEmail(email);
+        //    if (user != null && IsUserValid(user, password))
+        //    {
+        //        var userRole = new string[] { GetUserRole(user.Id).ToString() };
+        //        userContext.User = user;
+        //        var identity = new GenericIdentity(user.Email);
+        //        userContext.Principal = new GenericPrincipal(identity, userRole);
+        //    }
+        //    return userContext;
+        //}
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
         {
-            var userContext = new UserContext();
-
-            var user = _userRepository.GetSingleByEmail(email);
-            if (user != null && isUserValid(user, password))
+            if (!this.disposed)
             {
-                var userRoles = GetUserRoles(user.Id);
-                userContext.User = user;
-
-                var identity = new GenericIdentity(user.Email);
-                userContext.Principal = new GenericPrincipal(
-                    identity,
-                    userRoles.Select(x => x.Name).ToArray());
-            }
-
-            return userContext;
-        }
-
-        public User CreateUser(string username, string email, string lastName, string phoneNamber, string password, int[] roles)
-        {
-            var existingUser = _userRepository.GetSingleByEmail(email);
-
-            if (existingUser != null)
-            {
-                throw new Exception("Username is already in use");
-            }
-
-            var passwordSalt = _encryptionService.CreateSalt();
-
-            var user = new User()
-            {
-                FirstName = username,
-                LastName = lastName,
-                Email = email,
-                PhoneNumber = phoneNamber,
-                Salt = passwordSalt,
-                HashedPassword = _encryptionService.EncryptPassword(password, passwordSalt),
-                IsLocked = false,
-                DateCreated = DateTime.Now   
-            };
-
-            _userRepository.Add(user);
-
-            _unitOfWork.Commit();
-
-            if (roles != null || roles.Length > 0)
-            {
-                foreach (var role in roles)
+                if (disposing)
                 {
-                    addUserToRole(user, role);
+                    _unitOfWork.Dispose();
                 }
             }
-
-            _unitOfWork.Commit();
-
-            return user;
+            this.disposed = true;
         }
 
-        public User GetUser(int userId)
+        public void Dispose()
         {
-            return _userRepository.GetByID(userId);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public List<Role> GetUserRoles(int id)
+        public async Task<IdentityResult> CreateUser(User userin)
         {
-            var result = new List<Role>();
-            var existingUser = _userRepository.GetByID(id);
 
-            if (existingUser != null)
+            IdentityUser user = new IdentityUser
             {
-                result.Add(existingUser.Role);
-            }
+                UserName = userin.UserName
+            };
+
+            var result = await _userManager.CreateAsync(user);
+
             return result;
+            //var existingUser = _unitOfWork.UserRepository.GetSingleByEmail(user.Email);
 
+            //if (existingUser != null)
+            //{
+            //    throw new Exception("Username is already in use");
+            //}
+
+            //var passwordSalt = _encryptionService.CreateSalt();  
+
+            //_unitOfWork.UserRepository.Add(user);
+            //_unitOfWork.Commit();
+
+            //return user;
         }
 
-        private void addUserToRole(User user, int roleId)
+        public async Task<IdentityUser> GetUser(string userId)
         {
-            var role = _roleRepository.GetByID(roleId);
-
-            user.Role = role;
+            var result = await _userManager.FindByIdAsync(userId); // FindById(userId);
+            return result; //.UserRepository.GetByID(int.Parse(userId));
         }
 
-        private bool isPasswordValid(User user, string password)
+        public async Task<IdentityUser> GetUserByEmail(string email)
         {
-            return string.Equals(_encryptionService.EncryptPassword(password, user.Salt), user.HashedPassword);
+            var result = await _userManager.FindByEmailAsync(email); // FindById(userId);
+            return result; //.UserRepository.GetByID(int.Parse(userId));
         }
 
-        private bool isUserValid(User user, string password)
+        public async Task<IdentityUser> Login(string email, string password)
         {
-            if (isPasswordValid(user, password))
-            {
-                return !user.IsLocked;
-            }
+            var userResult = _userManager.FindByEmail(email);
 
-            return false;
+
+            var result = await _userManager.CheckPasswordAsync(userResult, password); // FindById(userId);
+            return userResult; //.UserRepository.GetByID(int.Parse(userId));
         }
+        //public Role GetUserRole(int id)
+        //{
+        //    var result = new Role();
+        //    var existingUser = _unitOfWork.UserRepository.GetByID(id);
+        //    result = existingUser.Role;
+        //    return result;
+        //}
+
+        //private void AddUserToRole(User user, int roleId)
+        //{
+        //    var role = _unitOfWork.RoleRepository.GetByID(roleId);
+
+        //    user.Role = role;
+        //}
+
+        //private bool IsPasswordValid(User user, string password)
+        //{
+        //    return string.Equals(_encryptionService.EncryptPassword(password, user.Salt), user.HashedPassword);
+        //}
+
+        //private bool IsUserValid(User user, string password)
+        //{
+        //    if (IsPasswordValid(user, password))
+        //    {
+        //        return !user.IsLocked;
+        //    }
+        //    return false;
+        //}
     }
 }

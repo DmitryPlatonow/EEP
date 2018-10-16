@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EEP.DAL.Repository.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace EEP.DAL.Repository
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
+                                              where TEntity : class
     {
         internal EEPDbContext _context;
         internal DbSet<TEntity> dbSet;

@@ -1,19 +1,17 @@
-﻿using EEP.Entities;
+﻿using EEP.DAL.Repository.Interfaces;
+using EEP.Entities;
 using System;
-
 
 namespace EEP.DAL.Repository
 {
-
-    public class UnitOfWork
-
+    public class UnitOfWork : IUnitOfWork
     {
         private EEPDbContext _context = new EEPDbContext();
         private GenericRepository<User> _userRepository;
-        private GenericRepository<Role> _roleRepository;
+      //  private GenericRepository<Role> _roleRepository;
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
-        private GenericRepository<HistoryParticipation> _historyParticipationRepository;
+        private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
 
         public GenericRepository<User> UserRepository
         {
@@ -27,17 +25,17 @@ namespace EEP.DAL.Repository
             }
         }
 
-        public GenericRepository<Role> RoleRepository
-        {
-            get
-            {
-                if (_roleRepository == null)
-                {
-                    _roleRepository = new GenericRepository<Role>(_context);
-                }
-                return _roleRepository;
-            }
-        }
+        //public GenericRepository<Role> RoleRepository
+        //{
+        //    get
+        //    {
+        //        if (_roleRepository == null)
+        //        {
+        //            _roleRepository = new GenericRepository<Role>(_context);
+        //        }
+        //        return _roleRepository;
+        //    }
+        //}
 
         public GenericRepository<Employee> EmployeeRepository
         {
@@ -63,15 +61,15 @@ namespace EEP.DAL.Repository
             }
         }
 
-        public GenericRepository<HistoryParticipation> HistoryParticipationRepository
+        public GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository
         {
             get
             {
-                if (_historyParticipationRepository == null)
+                if (_participationHistoryInProjectRepository == null)
                 {
-                    _historyParticipationRepository = new GenericRepository<HistoryParticipation>(_context);
+                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject>(_context);
                 }
-                return _historyParticipationRepository;
+                return _participationHistoryInProjectRepository;
             }
         }
 
