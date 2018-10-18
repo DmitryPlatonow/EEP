@@ -1,4 +1,4 @@
-﻿using EEP.DAL.Repository.Interfaces;
+﻿using EEP.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

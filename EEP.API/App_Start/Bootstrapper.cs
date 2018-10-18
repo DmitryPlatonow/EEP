@@ -4,15 +4,12 @@ using EEP.API.Mappers;
 using EEP.BL.Classes;
 using EEP.DAL;
 using EEP.DAL.Repository;
-using EEP.DAL.Repository.Interfaces;
+using EEP.DAL.Interfaces;
 using EEP.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
+using EEP.DAL.UnitOfWork;
 
 namespace EEP.API.App_Start
 {
@@ -49,7 +46,9 @@ namespace EEP.API.App_Start
 
             // register controllers
             containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
+
             IContainer container = containerBuilder.Build();
+
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
 

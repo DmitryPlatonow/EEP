@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using EEP.API.Models;
-using EEP.BL.Classes;
 using EEP.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -20,7 +14,7 @@ namespace EEP.API.Controllers
     public class AccountController : ApiController
     {
 
-        private readonly IUserService userService;
+       // private readonly IUserService userService;
         private readonly UserManager<User> userManager;
 
         private IAuthenticationManager AuthenticationManager
@@ -31,9 +25,10 @@ namespace EEP.API.Controllers
             }
         }
 
-        public AccountController(IUserService userService, UserManager<User> userManager)
+
+        public AccountController( UserManager<User> userManager)
         {
-            this.userService = userService;
+          //  this.userService = userService;
             this.userManager = userManager;
 
             //Todo: This needs to be moved from here.
@@ -44,8 +39,8 @@ namespace EEP.API.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-       // [Route("Register")]
+        [HttpPost]
+        [OverrideAuthorization]
         public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
         {
             if (ModelState.IsValid)
@@ -54,12 +49,13 @@ namespace EEP.API.Controllers
                 {
                     User user = new User();
                     Mapper.Map(userModel, user);
+                    user.DateCreated = DateTime.Now;
 
                     var identityResult = await userManager.CreateAsync(user, userModel.Password);
 
                     if (identityResult.Succeeded)
                     {
-                        userManager.AddToRole(user.Id, "User");
+                        userManager.AddToRole(user.Id, "Employee");
                         return Ok();
                     }
                     else

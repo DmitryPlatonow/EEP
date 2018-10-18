@@ -54,8 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\EncryptionService.cs" />
     <Compile Include="Classes\IUserService.cs" />
+    <Compile Include="Classes\ResourceManagerServvice.cs" />
     <Compile Include="Classes\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkClasses\UserContext.cs" />

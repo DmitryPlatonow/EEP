@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace EEP.DAL.Repository.Interfaces
+namespace EEP.DAL.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
@@ -12,6 +13,6 @@ namespace EEP.DAL.Repository.Interfaces
         void Add(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entityToDelete);
-        void Update(TEntity entityToUpdate);     
+        void Update(TEntity entityToUpdate);
     }
 }

@@ -1,28 +1,18 @@
-﻿using EEP.DAL.Repository.Interfaces;
+﻿using EEP.DAL.Interfaces;
+using EEP.DAL.Repository;
 using EEP.Entities;
 using System;
+using System.Threading.Tasks;
 
-namespace EEP.DAL.Repository
+namespace EEP.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
         private EEPDbContext _context = new EEPDbContext();
-        private GenericRepository<User> _userRepository;
+      //  private GenericRepository<User> _userRepository;
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
         private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
-
-        public GenericRepository<User> UserRepository
-        {
-            get
-            {
-                if (_userRepository == null)
-                {
-                    _userRepository = new GenericRepository<User>(_context);
-                }
-                return _userRepository;
-            }
-        }
 
         public GenericRepository<Employee> EmployeeRepository
         {
