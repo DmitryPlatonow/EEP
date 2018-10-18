@@ -9,12 +9,9 @@ namespace EEP.DAL
         public EEPDbContext()
             : base("EEPDbContext")
         {
-         //Database.SetInitializer<EEPDbContext>(null);
-         // Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(false));
+        // Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(true));
         }
 
-      //  public virtual DbSet<User> Users { get; set; }
-     //   public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ParticipationHistoryInProject> ParticipationHistoryInProject { get; set; }
@@ -23,20 +20,23 @@ namespace EEP.DAL
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLoginProviders");
 
-          //  modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-          //  modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
-          //  modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
-           // modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLoginProviders");
-            // modelBuilder.Entity<User>().ToTable("Users");
-            //  modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Project>().ToTable("Projects");
             modelBuilder.Entity<ParticipationHistoryInProject>().ToTable("ParticipationHistoryInProjects");
 
 
-           // modelBuilder.Configurations.Add(new IdentityUserRoleConfiguration());
-         //   modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());
+        }
+
+
+        public void Create()
+        {
+            new EEPDbContext();
         }
 
     }

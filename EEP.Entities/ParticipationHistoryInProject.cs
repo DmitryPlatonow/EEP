@@ -1,5 +1,4 @@
 ﻿using EEP.Entities.Enums;
-using EEP.Entities.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,12 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EEP.Entities
 {
-    public class ParticipationHistoryInProject 
+    public class ParticipationHistoryInProject
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public int Id { get; set; }
-
         [Key, ForeignKey("Employee")]
         [Column("EmployeeId", Order = 0)]
         public int EmployeeIdId { get; set; }

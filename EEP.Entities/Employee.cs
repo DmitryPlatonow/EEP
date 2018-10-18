@@ -1,12 +1,11 @@
 ﻿
-using EEP.Entities.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EEP.Entities
 {
-    public class Employee : IHavePrimaryKey
+    public class Employee
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EEP.DAL.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-                                              where TEntity : class
+                                                       where TEntity : class
     {
         internal EEPDbContext _context;
         internal DbSet<TEntity> dbSet;

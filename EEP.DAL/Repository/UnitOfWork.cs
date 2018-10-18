@@ -8,7 +8,6 @@ namespace EEP.DAL.Repository
     {
         private EEPDbContext _context = new EEPDbContext();
         private GenericRepository<User> _userRepository;
-      //  private GenericRepository<Role> _roleRepository;
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
         private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
@@ -24,18 +23,6 @@ namespace EEP.DAL.Repository
                 return _userRepository;
             }
         }
-
-        //public GenericRepository<Role> RoleRepository
-        //{
-        //    get
-        //    {
-        //        if (_roleRepository == null)
-        //        {
-        //            _roleRepository = new GenericRepository<Role>(_context);
-        //        }
-        //        return _roleRepository;
-        //    }
-        //}
 
         public GenericRepository<Employee> EmployeeRepository
         {

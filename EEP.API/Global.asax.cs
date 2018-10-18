@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using EEP.API.App_Start;
+using EEP.DAL;
+using System.Data.Entity;
 using System.Web.Http;
-using System.Web.Routing;
+
+using Configuration = EEP.DAL.Migrations.Configuration;
 
 namespace EEP.API
 {
@@ -12,6 +12,10 @@ namespace EEP.API
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            Bootstrapper.Configure();
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Configuration>());
+
+
         }
     }
 }
