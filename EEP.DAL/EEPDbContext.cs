@@ -2,14 +2,15 @@ namespace EEP.DAL
 {
     using EEP.Entities;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System;
     using System.Data.Entity;
 
-    public class EEPDbContext : IdentityDbContext<User>
+    public class EEPDbContext : IdentityDbContext<User, Role, Guid, UserLogin, UserRole, UserClaim>
     {
         public EEPDbContext()
             : base("EEPDbContext")
         {
-        // Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(true));
+            // Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(true));
         }
 
         public virtual DbSet<Employee> Employees { get; set; }
@@ -34,9 +35,9 @@ namespace EEP.DAL
         }
 
 
-        public void Create()
+        public static EEPDbContext Create()
         {
-            new EEPDbContext();
+            return new EEPDbContext();
         }
 
     }

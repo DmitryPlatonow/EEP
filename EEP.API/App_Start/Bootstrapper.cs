@@ -5,15 +5,17 @@ using EEP.BL.Classes;
 using EEP.DAL;
 using EEP.DAL.Repository;
 using EEP.DAL.Interfaces;
-using EEP.Entities;
+using EEP.DAL.UnitOfWork;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Http;
 using EEP.DAL.UnitOfWork;
+using System;
+using EEP.Entities;
 
 namespace EEP.API.App_Start
 {
-    public static class Bootstrapper//<TEntity> //where TEntity : class
+    public static class Bootstrapper
     {
 
         public static void Configure()
@@ -31,20 +33,31 @@ namespace EEP.API.App_Start
         public static void ConfigureWebApiContainer(ContainerBuilder containerBuilder)
         {
             // register unit of work
-            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().AsImplementedInterfaces().InstancePerApiRequest();
+            containerBuilder.RegisterType<DAL.UnitOfWork.UnitOfWork>().As<IUnitOfWork>().AsImplementedInterfaces().InstancePerApiRequest();
 
             // register repository
-            containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As( typeof(IGenericRepository <>)).InstancePerApiRequest();
+            containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerApiRequest();
 
+            containerBuilder.RegisterType<UserStore>().InstancePerApiRequest();
+          //  containerBuilder.RegisterType<RoleStore>().As<RoleStore<Role, Guid, UserRole>>().InstancePerApiRequest();
+            containerBuilder.RegisterType<UserManager>().InstancePerApiRequest();
+            //  containerBuilder.RegisterType<RoleManager>();
+            containerBuilder.RegisterType<EEPDbContext>().InstancePerApiRequest();
+
+            containerBuilder.RegisterType<OperationResult>().As<IOperationResult>().AsImplementedInterfaces().InstancePerApiRequest();
             // register services
-            containerBuilder.RegisterType<UserService>().InstancePerApiRequest();
-            containerBuilder.Register(c => new UserManager<User>(new UserStore<User>(new EEPDbContext())
-            {
-                /*Avoids UserStore invoking SaveChanges on every actions.*/
-                //AutoSaveChanges = false
-            })).As<UserManager<User>>().InstancePerApiRequest();
+            containerBuilder.RegisterType<UserService>().UsingConstructor(typeof(UserManager)).InstancePerApiRequest();
+
+
+
+            //containerBuilder.Register(c => new UserManager(new UserStore(EEPDbContext.Create())
+            //{
+            //    /*Avoids UserStore invoking SaveChanges on every actions.*/
+            //    //AutoSaveChanges = false
+            //})).As<UserManager<User, Guid>>().InstancePerApiRequest();
 
             // register controllers
+            // containerBuilder.RegisterApiControllers(typeof(ApiController).Assembly);
             containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 
             IContainer container = containerBuilder.Build();

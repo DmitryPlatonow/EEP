@@ -15,6 +15,8 @@ namespace EEP.API
             Bootstrapper.Configure();
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Configuration>());
 
+            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy
+= IncludeErrorDetailPolicy.Always;
 
         }
     }

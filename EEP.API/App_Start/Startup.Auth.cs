@@ -1,12 +1,20 @@
-﻿using EEP.API.Providers;
+﻿
+using EEP.API.Providers;
+using EEP.BL.Classes;
 using EEP.DAL;
 using EEP.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
+using System.Linq;
+using System.Net.Http.Formatting;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(EEP.API.Startup))]
 
@@ -18,8 +26,7 @@ namespace EEP.API
         {
             PublicClientId = "self";
 
-            EEPDbContext dbContext = new EEPDbContext();
-            UserManagerFactory = () => new UserManager<User>(new UserStore<User>(dbContext));
+            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>(EEPDbContext.Create()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -33,7 +40,7 @@ namespace EEP.API
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<User>> UserManagerFactory { get; set; }
+        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 
@@ -68,31 +75,3 @@ namespace EEP.API
         }
     }
 }
-
-//public void Configuration(IAppBuilder app)
-//{
-//    HttpConfiguration config = new HttpConfiguration();
-
-//    ConfigureOAuth(app);
-
-//    WebApiConfig.Register(config);
-//    app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-//    app.UseWebApi(config);
-
-//}
-
-//public void ConfigureOAuth(IAppBuilder app)
-//{
-//    OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
-//    {
-//        AllowInsecureHttp = true,
-//        TokenEndpointPath = new PathString("/token"),
-//        AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-//        Provider = new ApplicationOAuthProvider()
-//    };
-
-//    // Token Generation
-//    app.UseOAuthAuthorizationServer(OAuthServerOptions);
-//    app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
-//}

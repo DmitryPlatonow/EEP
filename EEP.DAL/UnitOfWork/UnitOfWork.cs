@@ -2,6 +2,9 @@
 using EEP.DAL.Repository;
 using EEP.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EEP.DAL.UnitOfWork
@@ -9,7 +12,6 @@ namespace EEP.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private EEPDbContext _context = new EEPDbContext();
-      //  private GenericRepository<User> _userRepository;
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
         private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
@@ -74,6 +76,5 @@ namespace EEP.DAL.UnitOfWork
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
     }
 }

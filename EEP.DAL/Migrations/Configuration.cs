@@ -20,8 +20,8 @@ namespace EEP.DAL.Migrations
 
             {
 
-                var userManager = new UserManager<User>(new UserStore<User>(context));
-                userManager.UserValidator = new UserValidator<User>(userManager)
+                var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+                userManager.UserValidator = new UserValidator<IdentityUser>(userManager)
                 {
                     AllowOnlyAlphanumericUserNames = false
                 };

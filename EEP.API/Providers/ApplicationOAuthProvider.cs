@@ -18,9 +18,9 @@ namespace EEP.API.Providers
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
-        private readonly Func<UserManager<User>> _userManagerFactory;
+        private readonly Func<UserManager<IdentityUser>> _userManagerFactory;
 
-        public ApplicationOAuthProvider(string publicClientId, Func<UserManager<User>> userManagerFactory)
+        public ApplicationOAuthProvider(string publicClientId, Func<UserManager<IdentityUser>> userManagerFactory)
         {
             if (publicClientId == null)
             {
@@ -38,9 +38,9 @@ namespace EEP.API.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            using (UserManager<User> userManager = _userManagerFactory())
+            using (UserManager<IdentityUser> userManager = _userManagerFactory())
             {
-                User user = await userManager.FindAsync(context.UserName, context.Password);
+                IdentityUser user = await userManager.FindAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -50,7 +50,7 @@ namespace EEP.API.Providers
 
                 ClaimsIdentity oAuthIdentity = await userManager.CreateIdentityAsync(user, context.Options.AuthenticationType);
                 ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
-                AuthenticationProperties properties = CreateProperties(user.UserName, user.Roles.FirstOrDefault().ToString());
+                AuthenticationProperties properties = CreateProperties(user.UserName, user.Roles.First().RoleId);
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
                 context.Validated(ticket);
                 context.Request.Context.Authentication.SignIn(cookiesIdentity);
