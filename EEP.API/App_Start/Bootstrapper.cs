@@ -12,6 +12,8 @@ using System.Web.Http;
 using EEP.DAL.UnitOfWork;
 using System;
 using EEP.Entities;
+using EEP.API.Controllers;
+using System.Reflection;
 
 namespace EEP.API.App_Start
 {
@@ -33,20 +35,26 @@ namespace EEP.API.App_Start
         public static void ConfigureWebApiContainer(ContainerBuilder containerBuilder)
         {
             // register unit of work
-            containerBuilder.RegisterType<DAL.UnitOfWork.UnitOfWork>().As<IUnitOfWork>().AsImplementedInterfaces().InstancePerApiRequest();
+            //containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().AsImplementedInterfaces().InstancePerApiRequest();
 
-            // register repository
-            containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerApiRequest();
+            //// register repository
+            //containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerApiRequest();
 
-            containerBuilder.RegisterType<UserStore>().InstancePerApiRequest();
-          //  containerBuilder.RegisterType<RoleStore>().As<RoleStore<Role, Guid, UserRole>>().InstancePerApiRequest();
-            containerBuilder.RegisterType<UserManager>().InstancePerApiRequest();
-            //  containerBuilder.RegisterType<RoleManager>();
-            containerBuilder.RegisterType<EEPDbContext>().InstancePerApiRequest();
+            //  containerBuilder.RegisterType<EEPDbContext>().InstancePerApiRequest();
 
-            containerBuilder.RegisterType<OperationResult>().As<IOperationResult>().AsImplementedInterfaces().InstancePerApiRequest();
+            //containerBuilder.RegisterType<UserStore>().As<UserStore>().InstancePerApiRequest();
+
+            //  containerBuilder.RegisterType<UserService>, MyUserManagerService>();
+            //  containerBuilder.RegisterType<UserManager>().As<UserManager>().InstancePerApiRequest();
+            //containerBuilder.RegisterType<RoleManager>();
+
+
             // register services
-            containerBuilder.RegisterType<UserService>().UsingConstructor(typeof(UserManager)).InstancePerApiRequest();
+
+            containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            containerBuilder.RegisterType<UserService>().AsSelf().InstancePerApiRequest();
+
 
 
 
@@ -54,15 +62,16 @@ namespace EEP.API.App_Start
             //{
             //    /*Avoids UserStore invoking SaveChanges on every actions.*/
             //    //AutoSaveChanges = false
-            //})).As<UserManager<User, Guid>>().InstancePerApiRequest();
+            //})).InstancePerApiRequest();
 
             // register controllers
             // containerBuilder.RegisterApiControllers(typeof(ApiController).Assembly);
-            containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
+           // containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 
             IContainer container = containerBuilder.Build();
 
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            var resolver = new AutofacWebApiDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
 
     }

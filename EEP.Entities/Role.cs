@@ -3,7 +3,8 @@ using System;
 
 namespace EEP.Entities
 {
-    public class Role :  IdentityRole<Guid, UserRole>
+    public class Role :  IdentityRole
     {
+        
     }
 }

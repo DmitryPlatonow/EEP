@@ -87,11 +87,9 @@
     <Compile Include="Classes\IUserService.cs" />
     <Compile Include="Classes\OperationResult.cs" />
     <Compile Include="Classes\ResourceManagerServvice.cs" />
-    <Compile Include="Classes\RoleStore.cs" />
     <Compile Include="Classes\SignInManager.cs" />
     <Compile Include="Classes\UserManager.cs" />
     <Compile Include="Classes\UserService.cs" />
-    <Compile Include="Classes\UserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkClasses\UserContext.cs" />
   </ItemGroup>

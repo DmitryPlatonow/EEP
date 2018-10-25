@@ -15,16 +15,16 @@ namespace EEP.BL.Classes
     {
 
 
-        Task<OperationResult> Create(UserDto userDto);
+        Task<OperationResult> CreateAsync(User userDto, string password);
 
 
 
-          Task<ClaimsIdentity> Authenticate(UserDto userDto);
-          Task<OperationResult> ConfirmEmail(Guid userId, string code);
+       //   Task<ClaimsIdentity> Authenticate(User userDto);
+       //   Task<OperationResult> ConfirmEmail(string userId, string code);
 
-          Task<OperationResult> ResetPassword(string email, string code, string password);
+       //   Task<OperationResult> ResetPassword(string email, string code, string password);
 
-       Task<OperationResult> SendCodeToRetrievePassword(string email);
+       //Task<OperationResult> SendCodeToRetrievePassword(string email);
        //Task SignIn(User user, bool isPersistent, bool rememberMe);
        //Task<SignInStatus> SignIn(string userName, string password, bool rememberMe, bool shouldLockout);
 

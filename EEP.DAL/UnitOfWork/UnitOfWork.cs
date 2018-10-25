@@ -12,41 +12,70 @@ namespace EEP.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private EEPDbContext _context = new EEPDbContext();
-        private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<Project> _projectRepository;
-        private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
 
-        public GenericRepository<Employee> EmployeeRepository
+        private GenericRepository<User,Guid> _userRepository;
+        private GenericRepository<Role,Guid> _roleRepository;
+
+        private GenericRepository<Employee, int> _employeeRepository;
+        private GenericRepository<Project, int> _projectRepository;
+        private GenericRepository<ParticipationHistoryInProject, Guid> _participationHistoryInProjectRepository;
+
+
+        public GenericRepository<User,Guid> UserRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new GenericRepository<User, Guid>(_context);
+                }
+                return _userRepository;
+            }
+        }
+
+        public GenericRepository<Role, Guid> RoleRepository
+        {
+            get
+            {
+                if (_roleRepository == null)
+                {
+                    _roleRepository = new GenericRepository<Role, Guid>(_context);
+                }
+                return _roleRepository;
+            }
+        }
+
+        public GenericRepository<Employee, int> EmployeeRepository
         {
             get
             {
                 if (_employeeRepository == null)
                 {
-                    _employeeRepository = new GenericRepository<Employee>(_context);
+                    _employeeRepository = new GenericRepository<Employee, int>(_context);
                 }
                 return _employeeRepository;
             }
         }
 
-        public GenericRepository<Project> ProjectRepository
+        public GenericRepository<Project, int> ProjectRepository
         {
             get
             {
                 if (_projectRepository == null)
                 {
-                    _projectRepository = new GenericRepository<Project>(_context);
+                    _projectRepository = new GenericRepository<Project, int>(_context);
                 }
                 return _projectRepository;
             }
         }
 
-        public GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository
+        public GenericRepository<ParticipationHistoryInProject, Guid> HistoryParticipationRepository
         {
             get
             {
                 if (_participationHistoryInProjectRepository == null)
                 {
-                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject>(_context);
+                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject, Guid>(_context);
                 }
                 return _participationHistoryInProjectRepository;
             }
@@ -55,6 +84,11 @@ namespace EEP.DAL.UnitOfWork
         public void Commit()
         {
             _context.SaveChanges();
+        }
+
+        public async Task CommitAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;

@@ -20,39 +20,41 @@ namespace EEP.DAL.Migrations
 
             {
 
-                var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
-                userManager.UserValidator = new UserValidator<IdentityUser>(userManager)
+
+
+                var userManager = new UserManager<User>(new UserStore<User>(context));
+                userManager.UserValidator = new UserValidator<User>(userManager)
                 {
                     AllowOnlyAlphanumericUserNames = false
                 };
-                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                var roleManager = new RoleManager<Role>(new RoleStore<Role>(context));
 
                 if (!roleManager.RoleExists("Admin"))
                 {
-                    roleManager.Create(new IdentityRole("Admin"));
+                    roleManager.Create(new Role() { Name = "Admin" });
                 }
 
-                if (!roleManager.RoleExists("Employee"))
-                {
-                    roleManager.Create(new IdentityRole("Employee"));
-                }
-                if (!roleManager.RoleExists("Project Manager"))
-                {
-                    roleManager.Create(new IdentityRole("Project Manager"));
-                }
-                if (!roleManager.RoleExists("Resurse Manager"))
-                {
-                    roleManager.Create(new IdentityRole("Resurse Manager"));
-                }
+                //if (!roleManager.RoleExists("Employee"))
+                //{
+                //    roleManager.Create(new Role() { Name = "Employee" });
+                //}
+                //if (!roleManager.RoleExists("Project Manager"))
+                //{
+                //    roleManager.Create(new Role() { Name = "Project Manager" });
+                //}
+                //if (!roleManager.RoleExists("Resurse Manager"))
+                //{
+                //    roleManager.Create(new Role() { Name = "Resurse Manager" });
+            //   }
 
-                var user = new User();
-                user.FirstName = "Admin";
-                user.LastName = "admin";
+                User user = new User();
+                 user.FirstName = "Admin";
+                 user.LastName = "admin";
                 user.Email = "admin@admin.com";
                 user.UserName = "admin@admin.com";
-                user.DateCreated = DateTime.Now;
+                  user.DateCreated = DateTime.Now;
 
-                var userResult = userManager.Create(user, "password*shop1");
+                IdentityResult userResult = userManager.Create(user, "Password*shop1");
 
                 if (userResult.Succeeded)
                 {
@@ -62,6 +64,6 @@ namespace EEP.DAL.Migrations
 
 
             }
-        }
+            }
     }
 }
