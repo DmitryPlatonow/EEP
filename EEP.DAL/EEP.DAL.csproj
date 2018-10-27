@@ -57,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EEPDbContext.cs" />
+    <Compile Include="Migrations\201810260705393_1.cs" />
+    <Compile Include="Migrations\201810260705393_1.Designer.cs">
+      <DependentUpon>201810260705393_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Extensions\UserExtensions.cs" />
@@ -76,6 +80,11 @@
       <Project>{85B97BBE-ED7F-4BAE-BD2C-3A8D537BBD3D}</Project>
       <Name>EEP.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810260705393_1.resx">
+      <DependentUpon>201810260705393_1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,9 +13,7 @@ namespace EEP.BL.Classes
 {
     public interface IUserService
     {
-
-
-        Task<OperationResult> CreateAsync(User userDto, string password);
+        Task<User> GetByIdAsync(Guid id);
 
 
 

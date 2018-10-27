@@ -14,6 +14,7 @@ using System;
 using EEP.Entities;
 using EEP.API.Controllers;
 using System.Reflection;
+using System.Data.Entity;
 
 namespace EEP.API.App_Start
 {
@@ -23,7 +24,7 @@ namespace EEP.API.App_Start
         public static void Configure()
         {
             ConfigureAutofacContainer();
-            AutoMapperConfiguration.Configure();
+          //  AutoMapperConfiguration.Configure();
         }
 
         public static void ConfigureAutofacContainer()
@@ -35,12 +36,14 @@ namespace EEP.API.App_Start
         public static void ConfigureWebApiContainer(ContainerBuilder containerBuilder)
         {
             // register unit of work
-            //containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().AsImplementedInterfaces().InstancePerApiRequest();
+            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             //// register repository
-            //containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerApiRequest();
+            containerBuilder.RegisterGeneric(typeof(GenericRepository<,>)).As(typeof(IGenericRepository<,>)).InstancePerLifetimeScope();
 
-            //  containerBuilder.RegisterType<EEPDbContext>().InstancePerApiRequest();
+           
+          containerBuilder.RegisterType(typeof(EEPDbContext)).AsSelf().InstancePerLifetimeScope();
+
 
             //containerBuilder.RegisterType<UserStore>().As<UserStore>().InstancePerApiRequest();
 
@@ -51,9 +54,9 @@ namespace EEP.API.App_Start
 
             // register services
 
-            containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            //   containerBuilder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            containerBuilder.RegisterType<UserService>().AsSelf().InstancePerApiRequest();
+            containerBuilder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
 
 
 
@@ -66,12 +69,12 @@ namespace EEP.API.App_Start
 
             // register controllers
             // containerBuilder.RegisterApiControllers(typeof(ApiController).Assembly);
-           // containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
+           containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 
             IContainer container = containerBuilder.Build();
 
-            var resolver = new AutofacWebApiDependencyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+           
+            GlobalConfiguration.Configuration.DependencyResolver  = new AutofacWebApiDependencyResolver(container);
         }
 
     }

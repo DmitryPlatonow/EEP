@@ -8,10 +8,6 @@ namespace EEP.Entities
 {
     public class ParticipationHistoryInProject
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ParticipationHistoryInProjectId { get; set; }
-
         [Key, ForeignKey("Employee")]
         [Column("EmployeeId", Order = 0)]
         public int EmployeeIdId { get; set; }

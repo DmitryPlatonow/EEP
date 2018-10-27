@@ -16,31 +16,24 @@ using EEP.DAL.Repository.Extensions;
 namespace EEP.BL.Classes
 {
     public class UserService : IUserService
+                                    
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         
-        public UserService(UnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;           
         }
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-
-            var user =  _unitOfWork.UserRepository.GetByIdAsync(id);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
             if (user == null)
             {
-                return new OperationResult(false, result.Errors.FirstOrDefault(), "");
-
-                return new OperationResult(true, "Registration successfully complited", "");
+                return null;               
             }
-            else
-            {
-                return new OperationResult(false, "This user is already exists", "UserName");
-            }
-
-            User user = _unitOfWork.UserRepository.
+            return user;           
         }
 
 

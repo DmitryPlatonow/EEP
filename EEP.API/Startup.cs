@@ -19,15 +19,15 @@ namespace EEP.API
 
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration httpConfig = new HttpConfiguration();
+            //HttpConfiguration httpConfig = new HttpConfiguration();
 
             ConfigureOAuthTokenGeneration(app);
 
-            ConfigureWebApi(httpConfig);
+            //ConfigureWebApi(httpConfig);
 
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
-            app.UseWebApi(httpConfig);
+            //app.UseWebApi(httpConfig);
 
  
         }

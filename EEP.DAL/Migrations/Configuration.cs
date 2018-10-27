@@ -11,7 +11,7 @@ namespace EEP.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             
         }
 

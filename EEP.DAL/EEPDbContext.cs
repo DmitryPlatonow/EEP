@@ -1,5 +1,6 @@
 namespace EEP.DAL
 {
+    using EEP.DAL.Interfaces;
     using EEP.Entities;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
@@ -11,7 +12,9 @@ namespace EEP.DAL
         public EEPDbContext()
             : base("EEPDbContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(true));
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<EEPDbContext, Migrations.Configuration>(true));
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<Employee> Employees { get; set; }
@@ -44,5 +47,6 @@ namespace EEP.DAL
         }
 
     }
+
 }
 

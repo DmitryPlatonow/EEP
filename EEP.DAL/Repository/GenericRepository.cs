@@ -37,7 +37,7 @@ namespace EEP.DAL.Repository
 
         public virtual TEntity GetByID(TKey id)
         {
-            return _dbSet.FirstOrDefault();
+            return _dbSet.Find(id);
         }
 
         public virtual void Add(TEntity entity)
@@ -69,7 +69,7 @@ namespace EEP.DAL.Repository
 
         public async virtual Task<TEntity> GetByIdAsync(TKey id)
         {
-            return await _dbSet.FindAsync(id);
+            return await GetAllIncluding().FirstOrDefault(x => x.Id == id);
         }
 
         public async virtual Task AddAsync(TEntity entity)

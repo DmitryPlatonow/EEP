@@ -28,11 +28,9 @@ namespace EEP.API.Controllers
             : base()
         {
             _userService = userService;
+           
         }
-        public AccountsController()
-        {
 
-        }
 
         [Route("users")]
         public IHttpActionResult GetUsers()
@@ -41,10 +39,10 @@ namespace EEP.API.Controllers
         }
 
         [Route("user/{id:guid}", Name = "GetUserById")]
-        public async Task<IHttpActionResult> GetUser(string Id)
+        public async Task<IHttpActionResult> GetUser(Guid Id)
         {
-            var user = await this.UserManager.FindByIdAsync(Id);
-
+            var user = await this._userService.GetByIdAsync(Id);
+           // var user2 = await UserManager.GetByIdAsync(Id);
             if (user != null)
             {
                 return Ok(this.TheModelFactory.Create(user));
@@ -85,11 +83,11 @@ namespace EEP.API.Controllers
                 DateCreated = DateTime.Now.Date,
             };
 
-            OperationResult addUserResult = await _userService.CreateAsync(user, createUserModel.Password);
+            var addUserResult = await this.UserManager.CreateAsync(user, createUserModel.Password);
 
             if (!addUserResult.Succeeded)
             {
-                return BadRequest(addUserResult.Message);
+                return GetErrorResult(addUserResult);
             }
 
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
