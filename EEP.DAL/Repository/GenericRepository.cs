@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EEP.DAL.Repository
 {
-    public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                                                     where TEntity : class
-                                                    where TKey : struct
+                                                    
 
     {
         internal EEPDbContext _context;
@@ -35,7 +35,7 @@ namespace EEP.DAL.Repository
             return _context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(TKey id)
+        public virtual TEntity GetByID(object id)
         {
             return _dbSet.Find(id);
         }
@@ -45,7 +45,7 @@ namespace EEP.DAL.Repository
             _dbSet.Add(entity);
         }
 
-        public virtual void Delete(TKey id)
+        public virtual void Delete(object id)
         {
             TEntity entityToDelete = _dbSet.Find(id);
             Delete(entityToDelete);
@@ -67,9 +67,9 @@ namespace EEP.DAL.Repository
         }
 
 
-        public async virtual Task<TEntity> GetByIdAsync(TKey id)
+        public async virtual Task<TEntity> GetByIdAsync(object id)
         {
-            return await GetAllIncluding().FirstOrDefault(x => x.Id == id);
+            return await _dbSet.FindAsync(id);
         }
 
         public async virtual Task AddAsync(TEntity entity)
@@ -78,7 +78,7 @@ namespace EEP.DAL.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async virtual Task DeleteAsync(TKey id)
+        public async virtual Task DeleteAsync(object id)
         {
             var entityToDelete = _dbSet.Find(id);
             await DeleteAsync(entityToDelete);

@@ -7,15 +7,11 @@ namespace EEP.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        GenericRepository<User, Guid> UserRepository { get; }
-
-
-         GenericRepository<Role, Guid> RoleRepository { get; }
-
-        GenericRepository<Employee, int> EmployeeRepository { get; }
-
-        GenericRepository<Project, int> ProjectRepository { get; }
-        GenericRepository<ParticipationHistoryInProject, Guid> HistoryParticipationRepository { get; }
+        GenericRepository<User> UserRepository { get; }
+         GenericRepository<Role> RoleRepository { get; }
+        GenericRepository<Employee> EmployeeRepository { get; }
+        GenericRepository<Project> ProjectRepository { get; }
+        GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository { get; }
         void Commit();
         Task CommitAsync();
     }

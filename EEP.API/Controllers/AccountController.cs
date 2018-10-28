@@ -23,12 +23,14 @@ namespace EEP.API.Controllers
     public class AccountsController : BaseApiController
     {
         private IUserService _userService;
+    //    private UserManager _userManager = null;
+
 
         public AccountsController(IUserService userService)
             : base()
         {
             _userService = userService;
-           
+            
         }
 
 
@@ -39,9 +41,9 @@ namespace EEP.API.Controllers
         }
 
         [Route("user/{id:guid}", Name = "GetUserById")]
-        public async Task<IHttpActionResult> GetUser(Guid Id)
+        public async Task<IHttpActionResult> GetUser(string id)
         {
-            var user = await this._userService.GetByIdAsync(Id);
+            var user = await _userService.GetByIdAsync(id);
            // var user2 = await UserManager.GetByIdAsync(Id);
             if (user != null)
             {

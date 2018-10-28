@@ -19,15 +19,17 @@ namespace EEP.BL.Classes
                                     
     {
         private readonly IUnitOfWork _unitOfWork;
+        private UserManager _userManager;
         
-        public UserService(IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork, UserManager userManager)
         {
-            _unitOfWork = unitOfWork;           
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(string id)
         {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -36,7 +38,16 @@ namespace EEP.BL.Classes
             return user;           
         }
 
+        public async Task<User> Ge(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
 
+            if (user == null)
+            {
+                return null;
+            }
+            return user;
+        }
 
 
     }

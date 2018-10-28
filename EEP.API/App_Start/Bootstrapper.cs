@@ -39,18 +39,20 @@ namespace EEP.API.App_Start
             containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
             //// register repository
-            containerBuilder.RegisterGeneric(typeof(GenericRepository<,>)).As(typeof(IGenericRepository<,>)).InstancePerLifetimeScope();
+            containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
 
            
           containerBuilder.RegisterType(typeof(EEPDbContext)).AsSelf().InstancePerLifetimeScope();
 
 
-            //containerBuilder.RegisterType<UserStore>().As<UserStore>().InstancePerApiRequest();
+          //  containerBuilder.RegisterType<UserStore<User>>().As<IUserStore<IdentityUser>>().InstancePerLifetimeScope();
 
             //  containerBuilder.RegisterType<UserService>, MyUserManagerService>();
-            //  containerBuilder.RegisterType<UserManager>().As<UserManager>().InstancePerApiRequest();
+            containerBuilder.RegisterType<User>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<UserManager>().InstancePerLifetimeScope();
             //containerBuilder.RegisterType<RoleManager>();
-
+            containerBuilder.RegisterType<UserStore<User>>().As<IUserStore<User>>().InstancePerRequest();
+           
 
             // register services
 
@@ -61,15 +63,15 @@ namespace EEP.API.App_Start
 
 
 
-            //containerBuilder.Register(c => new UserManager(new UserStore(EEPDbContext.Create())
+            //containerBuilder.Register(c => new UserManager(new UserStore<User>(EEPDbContext.Create())
             //{
-            //    /*Avoids UserStore invoking SaveChanges on every actions.*/
-            //    //AutoSaveChanges = false
-            //})).InstancePerApiRequest();
+            //    /*avoids userstore invoking savechanges on every actions.*/
+            //    //autosavechanges = false
+            //})).As<UserManager>().InstancePerLifetimeScope();
 
             // register controllers
             // containerBuilder.RegisterApiControllers(typeof(ApiController).Assembly);
-           containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
+            containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 
             IContainer container = containerBuilder.Build();
 

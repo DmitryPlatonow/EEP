@@ -13,7 +13,7 @@ namespace EEP.BL.Classes
 {
     public interface IUserService
     {
-        Task<User> GetByIdAsync(Guid id);
+        Task<User> GetByIdAsync(string id);
 
 
 

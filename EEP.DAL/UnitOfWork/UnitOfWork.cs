@@ -13,69 +13,69 @@ namespace EEP.DAL.UnitOfWork
     {
         private EEPDbContext _context = new EEPDbContext();
 
-        private GenericRepository<User,Guid> _userRepository;
-        private GenericRepository<Role,Guid> _roleRepository;
+        private GenericRepository<User> _userRepository;
+        private GenericRepository<Role> _roleRepository;
 
-        private GenericRepository<Employee, int> _employeeRepository;
-        private GenericRepository<Project, int> _projectRepository;
-        private GenericRepository<ParticipationHistoryInProject, Guid> _participationHistoryInProjectRepository;
+        private GenericRepository<Employee> _employeeRepository;
+        private GenericRepository<Project> _projectRepository;
+        private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
 
 
-        public GenericRepository<User,Guid> UserRepository
+        public GenericRepository<User> UserRepository
         {
             get
             {
                 if (_userRepository == null)
                 {
-                    _userRepository = new GenericRepository<User, Guid>(_context);
+                    _userRepository = new GenericRepository<User>(_context);
                 }
                 return _userRepository;
             }
         }
 
-        public GenericRepository<Role, Guid> RoleRepository
+        public GenericRepository<Role> RoleRepository
         {
             get
             {
                 if (_roleRepository == null)
                 {
-                    _roleRepository = new GenericRepository<Role, Guid>(_context);
+                    _roleRepository = new GenericRepository<Role>(_context);
                 }
                 return _roleRepository;
             }
         }
 
-        public GenericRepository<Employee, int> EmployeeRepository
+        public GenericRepository<Employee> EmployeeRepository
         {
             get
             {
                 if (_employeeRepository == null)
                 {
-                    _employeeRepository = new GenericRepository<Employee, int>(_context);
+                    _employeeRepository = new GenericRepository<Employee>(_context);
                 }
                 return _employeeRepository;
             }
         }
 
-        public GenericRepository<Project, int> ProjectRepository
+        public GenericRepository<Project> ProjectRepository
         {
             get
             {
                 if (_projectRepository == null)
                 {
-                    _projectRepository = new GenericRepository<Project, int>(_context);
+                    _projectRepository = new GenericRepository<Project>(_context);
                 }
                 return _projectRepository;
             }
         }
 
-        public GenericRepository<ParticipationHistoryInProject, Guid> HistoryParticipationRepository
+        public GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository
         {
             get
             {
                 if (_participationHistoryInProjectRepository == null)
                 {
-                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject, Guid>(_context);
+                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject>(_context);
                 }
                 return _participationHistoryInProjectRepository;
             }
