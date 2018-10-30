@@ -45,7 +45,7 @@ namespace EEP.API.Controllers
 
         [Authorize]
         [Route("user/{id:guid}", Name = "GetUserById")]
-        public async Task<IHttpActionResult> GetUser(string id)
+        public async Task<IHttpActionResult> GetUserById(string id)
         {
             var user = await _userService.GetByIdAsync(id);
             // var user2 = await UserManager.GetByIdAsync(Id);

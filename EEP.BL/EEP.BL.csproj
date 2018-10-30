@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Classes\EmailService.cs" />
     <Compile Include="Classes\IOperationResult.cs" />
+    <Compile Include="Classes\IProjectService.cs" />
     <Compile Include="Classes\IUserService.cs" />
     <Compile Include="Classes\OperationResult.cs" />
     <Compile Include="Classes\ProjectService.cs" />

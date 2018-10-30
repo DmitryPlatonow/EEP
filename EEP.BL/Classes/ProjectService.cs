@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
-    public class ProjectService
+    public class ProjectService : IProjectService
     {
         private readonly UnitOfWork _unitOfWork;
 
@@ -17,26 +17,28 @@ namespace EEP.BL.Classes
         }
 
         //C create
-        public async Task CreateProject(Project project)
+        public async Task<Project> CreateProjectAsunc(Project project)
         {
-            try
-            {
-                await _unitOfWork.ProjectRepository.AddAsync(project);
-                _unitOfWork.Commit();
-            }
-            catch (System.Exception)
+
+            var result = _unitOfWork.ProjectRepository.AddAsync(project);
+
+            if (result.Exception != null)
             {
                 throw new UserFriendlyException("Server Error");
+
             }
+            await _unitOfWork.CommitAsync();
+
+            return project;
         }
 
         //R Get all project
-        public async Task<IEnumerable<Project>> GetAllAsync(Project project)
+        public async Task<IEnumerable<Project>> GetAllAsync()
         {
             var listProject = await _unitOfWork.ProjectRepository.GetAllAsync();
             if (listProject == null)
             {
-                return null;
+                throw new UserFriendlyException(404, "Not Found");
             }
             return listProject;
 
@@ -59,18 +61,19 @@ namespace EEP.BL.Classes
         }
 
         // U
-        public async Task UpdateProjectAsync(Project project)
+        public async Task<Project> UpdateProjectAsync(Project project)
         {
-            try
-            {
-                await _unitOfWork.ProjectRepository.UpdateAsync(project);
-                _unitOfWork.Commit();
-            }
-            catch (System.Exception)
+
+
+            var result = _unitOfWork.ProjectRepository.UpdateAsync(project);
+
+            if (result.Exception != null)
             {
                 throw new UserFriendlyException("Server Error");
             }
+            await _unitOfWork.CommitAsync();
 
+            return project;
         }
 
         //D
