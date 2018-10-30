@@ -8,8 +8,8 @@ namespace EEP.API.Mappers
     {
         public PostProfile()
         {
-            CreateMap<User, RegisterViewModel>();
-            CreateMap<User, LoginViewModel>();
+            CreateMap<User, RegisterBindingModel>();
+            CreateMap<User, LoginBindingModel>();
         }
 
 

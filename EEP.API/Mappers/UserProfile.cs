@@ -9,9 +9,9 @@ namespace EEP.API.Mappers
     {
         public UserProfile()
         {
-            CreateMap<RegisterViewModel, User>();
-            CreateMap<LoginViewModel, User>();
-            CreateMap<RegisterViewModel, UserDto>();
+            CreateMap<RegisterBindingModel, User>();
+            CreateMap<LoginBindingModel, User>();
+            CreateMap<RegisterBindingModel, UserDto>();
         }
 
         public override string ProfileName

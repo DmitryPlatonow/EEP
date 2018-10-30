@@ -1,5 +1,6 @@
 ﻿using EEP.DAL.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ namespace EEP.DAL.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
                                                     where TEntity : class
-                                                    
+
 
     {
         internal EEPDbContext _context;
@@ -70,6 +71,11 @@ namespace EEP.DAL.Repository
         public async virtual Task<TEntity> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
         public async virtual Task AddAsync(TEntity entity)

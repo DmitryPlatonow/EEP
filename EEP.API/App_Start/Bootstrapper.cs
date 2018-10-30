@@ -8,7 +8,6 @@ using EEP.DAL.Interfaces;
 using EEP.DAL.UnitOfWork;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Http;
-
 using EEP.Entities;
 
 namespace EEP.API.App_Start
@@ -29,27 +28,39 @@ namespace EEP.API.App_Start
 
         public static void ConfigureWebApiContainer(ContainerBuilder containerBuilder)
         {
-            // register unit of work
-            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            // register DbContext
+            containerBuilder.RegisterType(typeof(EEPDbContext))
+                            .AsSelf()
+                            .InstancePerLifetimeScope();
 
             // register repository
-            containerBuilder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
+            containerBuilder.RegisterGeneric(typeof(GenericRepository<>))
+                            .As(typeof(IGenericRepository<>))
+                            .InstancePerLifetimeScope();
 
-            // register DbContext
-            containerBuilder.RegisterType(typeof(EEPDbContext)).AsSelf().InstancePerLifetimeScope();
+            // register unit of work
+            containerBuilder.RegisterType<UnitOfWork>()
+                            .As<IUnitOfWork>()
+                            .InstancePerLifetimeScope();
 
             // register services
-            containerBuilder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<UserService>()
+                            .As<IUserService>()
+                            .InstancePerLifetimeScope();
 
 
+            //containerBuilder.RegisterAssemblyTypes(System.AppDomain.CurrentDomain.GetAssemblies())
+            //                .Where(x => x.Name.EndsWith("Service"))
+            //                .AsImplementedInterfaces()
+            //                .InstancePerLifetimeScope();
 
 
-            containerBuilder.Register(c => new UserManager(new UserStore<User>(EEPDbContext.Create())
-            {
-                /*avoids userstore invoking savechanges on every actions.*/
-                //autosavechanges = false
-            })).As<UserManager>().InstancePerLifetimeScope();
+            // register UserManager
+            containerBuilder.Register(c => new UserManager(new UserStore<User>(EEPDbContext.Create())))
+                            .As<UserManager>()
+                            .InstancePerLifetimeScope();
 
+            // register Controllers
             containerBuilder.RegisterApiControllers(System.Reflection.Assembly.GetExecutingAssembly());
 
             IContainer container = containerBuilder.Build();
@@ -59,3 +70,4 @@ namespace EEP.API.App_Start
 
     }
 }
+

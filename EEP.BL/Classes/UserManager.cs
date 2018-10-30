@@ -5,9 +5,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
-
-
-
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
@@ -42,16 +41,18 @@ namespace EEP.BL.Classes
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
+                manager.UserTokenProvider = new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"))
                 {
                     //Code for email confirmation and reset password life time
-                    TokenLifespan = TimeSpan.FromHours(6);
+                    
+                    TokenLifespan = TimeSpan.FromHours(6)
 
                 };
                
             }
             return manager;
         }
+
 
     }
 }

@@ -2,7 +2,7 @@
 
 namespace EEP.API.Models
 {
-    public class LoginViewModel
+    public class LoginBindingModel
     {
         [Required]
         [Display(Name = "Email")]

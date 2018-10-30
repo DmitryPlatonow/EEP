@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EEP.API.Models
 {
-    public class RegisterViewModel
+    public class RegisterBindingModel
     {
         [Required]
         [EmailAddress]

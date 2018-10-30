@@ -12,6 +12,15 @@ namespace EEP.API.Controllers
 
         private ModelFactory _modelFactory;
         private UserManager _userManager = null;
+        private RoleManager _roleManager = null;
+
+        protected RoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? Request.GetOwinContext().GetUserManager<RoleManager>();
+            }
+        }
 
         protected UserManager UserManager
         {

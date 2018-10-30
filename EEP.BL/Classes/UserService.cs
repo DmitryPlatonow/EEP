@@ -29,7 +29,7 @@ namespace EEP.BL.Classes
 
         public async Task<User> GetByIdAsync(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.() .FindByIdAsync(id);
 
             if (user == null)
             {

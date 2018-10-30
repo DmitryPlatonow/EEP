@@ -126,7 +126,8 @@
     <Compile Include="Classes\IOperationResult.cs" />
     <Compile Include="Classes\IUserService.cs" />
     <Compile Include="Classes\OperationResult.cs" />
-    <Compile Include="Classes\ResourceManagerServvice.cs" />
+    <Compile Include="Classes\ProjectService.cs" />
+    <Compile Include="Classes\RoleManager.cs" />
     <Compile Include="Classes\SignInManager.cs" />
     <Compile Include="Classes\UserManager.cs" />
     <Compile Include="Classes\UserService.cs" />

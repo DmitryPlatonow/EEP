@@ -59,6 +59,7 @@
     <Compile Include="Enums\EmployeeRoleInProject.cs" />
     <Compile Include="Enums\ProjectStatus.cs" />
     <Compile Include="Enums\TypeOfParticipationInProject.cs" />
+    <Compile Include="UserFriendlyException.cs" />
     <Compile Include="Interfaces\IEmployee.cs" />
     <Compile Include="ParticipationHistoryInProject.cs" />
     <Compile Include="Project.cs" />

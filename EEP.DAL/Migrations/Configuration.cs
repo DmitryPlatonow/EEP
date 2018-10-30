@@ -12,16 +12,13 @@ namespace EEP.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            
+
         }
 
         protected override void Seed(EEP.DAL.EEPDbContext context)
         {
 
             {
-
-
-
                 var userManager = new UserManager<User>(new UserStore<User>(context));
                 userManager.UserValidator = new UserValidator<User>(userManager)
                 {
@@ -34,25 +31,28 @@ namespace EEP.DAL.Migrations
                     roleManager.Create(new Role() { Name = "Admin" });
                 }
 
-                //if (!roleManager.RoleExists("Employee"))
-                //{
-                //    roleManager.Create(new Role() { Name = "Employee" });
-                //}
-                //if (!roleManager.RoleExists("Project Manager"))
-                //{
-                //    roleManager.Create(new Role() { Name = "Project Manager" });
-                //}
-                //if (!roleManager.RoleExists("Resurse Manager"))
-                //{
-                //    roleManager.Create(new Role() { Name = "Resurse Manager" });
-            //   }
+
+                if (!roleManager.RoleExists("Resurse Manager"))
+                {
+                    roleManager.Create(new Role() { Name = "Resurse Manager" });
+                }
+
+                if (!roleManager.RoleExists("Project Manager"))
+                {
+                    roleManager.Create(new Role() { Name = "Project Manager" });
+                }
+
+                if (!roleManager.RoleExists("Employee"))
+                {
+                    roleManager.Create(new Role() { Name = "Employee" });
+                }
 
                 User user = new User();
-                 user.FirstName = "Admin";
-                 user.LastName = "admin";
+                user.FirstName = "Admin";
+                user.LastName = "admin";
                 user.Email = "admin@admin.com";
                 user.UserName = "admin@admin.com";
-                  user.DateCreated = DateTime.Now;
+                user.DateCreated = DateTime.Now;
 
                 IdentityResult userResult = userManager.Create(user, "Password*shop1");
 
@@ -61,9 +61,7 @@ namespace EEP.DAL.Migrations
                     var user1 = userManager.FindByName("admin@admin.com");
                     userManager.AddToRole(user1.Id, "Admin");
                 }
-
-
             }
-            }
+        }
     }
 }

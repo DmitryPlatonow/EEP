@@ -33,12 +33,9 @@ namespace EEP.Entities
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
             // Add custom user claims here
+            userIdentity.AddClaim(new Claim("DateCreated", DateCreated.ToString()));
             return userIdentity;
         }
 
-        //public static implicit operator IdentityUser(User v)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
