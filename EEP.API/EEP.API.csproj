@@ -204,6 +204,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,6 +213,7 @@
     <Compile Include="Mappers\PostProfile.cs" />
     <Compile Include="Mappers\UserProfile.cs" />
     <Compile Include="Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="Models\EmloyeeBindingModel.cs" />
     <Compile Include="Models\LoginBindingModel.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\ProjectBindingModel.cs" />

@@ -1,26 +1,26 @@
-﻿using EEP.DAL.Interfaces;
-using EEP.DAL.UnitOfWork;
-using EEP.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using EEP.DAL.UnitOfWork;
+using EEP.Entities;
 
 namespace EEP.BL.Classes
 {
-    public class ProjectService : ICRUDService<int, Project>
+    public class EmployeeService : ICRUDService<int, Employee>
     {
         private readonly UnitOfWork _unitOfWork;
 
-        public ProjectService()
+        public EmployeeService()
         {
             _unitOfWork = new UnitOfWork();
         }
 
         //C create
-        public async Task<Project> CreateAsync(Project project)
+        public async Task<Employee> CreateAsync(Employee employee)
         {
-            var result = _unitOfWork.ProjectRepository.AddAsync(project);
+            var result = _unitOfWork.EmployeeRepository.AddAsync(employee);
 
             if (result.Exception != null)
             {
@@ -29,36 +29,36 @@ namespace EEP.BL.Classes
             }
             await _unitOfWork.CommitAsync();
 
-            return project;
+            return employee;
         }
 
         //R Get all project
-        public async Task<IEnumerable<Project>> GetAllAsync()
+        public async Task<IEnumerable<Employee>> GetAllAsync()
         {
-            var listProject = await _unitOfWork.ProjectRepository.GetAllAsync();
-            if (listProject == null)
+            var listEmployee = await _unitOfWork.EmployeeRepository.GetAllAsync();
+            if (listEmployee == null)
             {
                 throw new UserFriendlyException(404, "Not Found");
             }
 
-            return listProject;
+            return listEmployee;
         }
 
-        public async Task<Project> GetByIdAsync(int id)
+        public async Task<Employee> GetByIdAsync(int id)
         {
-            var project = await _unitOfWork.ProjectRepository.GetByIdAsync(id);
+            var employee = await _unitOfWork.EmployeeRepository.GetByIdAsync(id);
 
-            if (project == null)
+            if (employee == null)
             {
                 throw new UserFriendlyException(404, "Not Found");
             }
-            return project;
+            return employee;
         }
 
         // U
-        public async Task<Project> UpdateAsync(Project project)
+        public async Task<Employee> UpdateAsync(Employee employee)
         {
-            var result = _unitOfWork.ProjectRepository.UpdateAsync(project);
+            var result = _unitOfWork.EmployeeRepository.UpdateAsync(employee);
 
             if (result.Exception != null)
             {
@@ -66,25 +66,18 @@ namespace EEP.BL.Classes
             }
             await _unitOfWork.CommitAsync();
 
-            return project;
-        }
-
-        public Task CreateAsunc(Project project)
-        {
-            throw new NotImplementedException();
+            return employee;
         }
 
         //D
         public async Task DeleteAsync(int id)
         {
-            var result =  _unitOfWork.ProjectRepository.DeleteAsync(id);
+            var result = _unitOfWork.EmployeeRepository.DeleteAsync(id);
             if (result == null)
             {
                 throw new UserFriendlyException(404, "Not Found");
             }
             await _unitOfWork.CommitAsync();
         }
-
-        
     }
 }

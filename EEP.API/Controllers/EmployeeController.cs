@@ -7,32 +7,30 @@ using System.Web.Http;
 
 namespace EEP.API.Controllers
 {
-    [Authorize]
-    [RoutePrefix("api/projects")]
-    public class ProjectsController : ApiController
+    public class EmployeeController : ApiController
     {
-        private ProjectService _projectService;
+        private EmployeeService _employeeService;
 
-        public ProjectsController(ProjectService projectService)
+        public EmployeeController(EmployeeService employeeService)
         {
-            _projectService = projectService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            return Json(await _projectService.GetAllAsync());
+            return Json(await _employeeService.GetAllAsync());
         }
 
         [HttpGet]
-        [Route("{id:int}", Name = "GetProjectById")]
-        public async Task<IHttpActionResult> GetProjectById(int id)
+        [Route("{id:int}", Name = "GetById")]
+        public async Task<IHttpActionResult> GetById(int id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            var project = await _projectService.GetByIdAsync(id);
+            var project = await _employeeService.GetByIdAsync(id);
             if (project != null)
             {
                 return Json(project);
@@ -42,60 +40,61 @@ namespace EEP.API.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IHttpActionResult> CreateProject(ProjectBindingModel projectModel)
+        public async Task<IHttpActionResult> CreateProject(EmloyeeBindingModel employeeModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Project project = new Project();
-            Mapper.Map(projectModel, project);
+            Employee employee = new Employee();
+            Mapper.Map(employeeModel, employee);
 
-            var result = await _projectService.CreateAsync(project);
+            var result = await _employeeService.CreateAsync(employee);
 
             if (result == null)
             {
                 return BadRequest();
             }
 
-            return Json(project);
+            return Json(employee);
         }
 
         [HttpPatch]
         [Route("update")]
-        public async Task<IHttpActionResult> UpdateProject(ProjectBindingModel projectModel)
+        public async Task<IHttpActionResult> Update(EmloyeeBindingModel employeeModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Project project = new Project();
-            Mapper.Map(projectModel, project);
+            Employee employee = new Employee();
+            Mapper.Map(employeeModel, employee);
 
-            var result = await _projectService.UpdateAsync(project);
+            var result = await _employeeService.UpdateAsync(employee);
 
             if (result == null)
             {
                 return BadRequest();
             }
 
-            return Json(project);
+            return Json(employee);
         }
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<IHttpActionResult> DeleteProject(int id)
+        public async Task<IHttpActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
 
-            await _projectService.DeleteAsync(id);
+            await _employeeService.DeleteAsync(id);
 
             return Ok();
         }
+
     }
 }

@@ -13,6 +13,7 @@ namespace EEP.API.Mappers
             CreateMap<LoginBindingModel, User>();
             CreateMap<RegisterBindingModel, UserDto>();
             CreateMap<ProjectBindingModel, Project>();
+            CreateMap<EmloyeeBindingModel, Employee>();
         }
 
         public override string ProfileName

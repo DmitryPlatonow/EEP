@@ -17,7 +17,7 @@ namespace EEP.DAL.Interfaces
         void Delete(TEntity entityToDelete);
         void Update(TEntity entityToUpdate);
 
-        Task<IQueryable<TEntity>> GetAllAsynk();
+        Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(object id);
         Task AddAsync(TEntity entity);
         Task DeleteAsync(object id);
