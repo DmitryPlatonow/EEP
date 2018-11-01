@@ -11,7 +11,7 @@ namespace EEP.DAL.Interfaces
          GenericRepository<Role> RoleRepository { get; }
         GenericRepository<Employee> EmployeeRepository { get; }
         GenericRepository<Project> ProjectRepository { get; }
-        GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository { get; }
+        GenericRepository<ProjectParticipationHistory> HistoryParticipationRepository { get; }
         void Commit();
         Task CommitAsync();
     }

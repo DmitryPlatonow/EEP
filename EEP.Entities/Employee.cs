@@ -14,7 +14,7 @@ namespace EEP.Entities
         [Required]
         public User User { get; set; }
 
-        public virtual ICollection<ParticipationHistoryInProject> ParticipationHistoryInProject { get; set; }
+        public virtual ICollection<ProjectParticipationHistory> ParticipationHistoryInProject { get; set; }
 
     }
 }

@@ -36,14 +36,14 @@ namespace EEP.API.Controllers
 
         }
 
-        [Authorize]
+       // [Authorize]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
             return Ok(UserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
         }
 
-        [Authorize]
+      //  [Authorize]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUserById(string id)
         {
@@ -170,13 +170,9 @@ namespace EEP.API.Controllers
                 {
                     return GetErrorResult(result);
                 }
-
                 return Ok();
-
             }
-
             return NotFound();
-
         }
 
         [Route("Logout")]

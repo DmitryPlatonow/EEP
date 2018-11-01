@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EEP.Entities
 {
-    public class ParticipationHistoryInProject
+    public class ProjectParticipationHistory
     {
         [Key, ForeignKey("Employee")]
         [Column("EmployeeId", Order = 0)]
@@ -32,11 +32,14 @@ namespace EEP.Entities
         public int Employment { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime StartDateParticipation { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime EndDateParticipation { get; set; }
 
-        public DateTime? RealEndDate { get; set; }
+        [DataType("datetime2")]
+        public DateTime? RealEndDateParticipation { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace EEP.API.Models
         [Required]
         public User User { get; set; }
 
-        public ICollection<ParticipationHistoryInProject> ParticipationHistoryInProject { get; set; }
+        public ICollection<ProjectParticipationHistory> ParticipationHistoryInProject { get; set; }
     }
 }

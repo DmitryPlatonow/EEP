@@ -44,10 +44,21 @@ namespace EEP.API.App_Start
                             .InstancePerLifetimeScope();
 
             // register services
+            //containerBuilder.RegisterGeneric(typeof(ICRUDService<,>))
+            //                .AsSelf()
+            //                .InstancePerLifetimeScope();
+
             containerBuilder.RegisterType<UserService>()
                             .As<IUserService>()
                             .InstancePerLifetimeScope();
 
+            containerBuilder.RegisterType<ProjectService>()
+                            .As<IProjectService>()
+                            .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<EmployeeService>()
+                            .As<IEmployeeService>()
+                            .InstancePerLifetimeScope();
 
             //containerBuilder.RegisterAssemblyTypes(System.AppDomain.CurrentDomain.GetAssemblies())
             //                .Where(x => x.Name.EndsWith("Service"))

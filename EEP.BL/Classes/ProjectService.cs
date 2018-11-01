@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
-    public class ProjectService : ICRUDService<int, Project>
+    public class ProjectService : IProjectService
     {
         private readonly UnitOfWork _unitOfWork;
 
@@ -20,13 +20,13 @@ namespace EEP.BL.Classes
         //C create
         public async Task<Project> CreateAsync(Project project)
         {
-            var result = _unitOfWork.ProjectRepository.AddAsync(project);
+             await _unitOfWork.ProjectRepository.AddAsync(project);
 
-            if (result.Exception != null)
-            {
-                throw new UserFriendlyException("Server Error");
+            //if (result.Exception != null)
+            //{
+            //    throw new UserFriendlyException("Server Error");
 
-            }
+            //}
             await _unitOfWork.CommitAsync();
 
             return project;
@@ -68,12 +68,7 @@ namespace EEP.BL.Classes
 
             return project;
         }
-
-        public Task CreateAsunc(Project project)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         //D
         public async Task DeleteAsync(int id)
         {

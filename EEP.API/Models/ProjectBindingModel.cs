@@ -11,19 +11,21 @@ namespace EEP.API.Models
     public class ProjectBindingModel
     {
         [MaxLength(75), MinLength(2)]
-        public string Name { get; set; }
+        public string ProjectName { get; set; }
 
         [MaxLength(-1)]
         public string Description { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        [DataType("datetime2")]
+        public DateTime StartProjectDate { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        [DataType("datetime2")]
+        public DateTime EndProjectDate { get; set; }
 
         [Required]
-        public ProjectStatus ProjectStatus { get; set; }
+        public ProjectStatus ProjectState { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
     }

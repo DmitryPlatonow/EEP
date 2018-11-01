@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using EEP.DAL.UnitOfWork;
 using EEP.Entities;
 
 namespace EEP.BL.Classes
 {
-    public class EmployeeService : ICRUDService<int, Employee>
+    public class EmployeeService : IEmployeeService
     {
         private readonly UnitOfWork _unitOfWork;
 

@@ -4,16 +4,17 @@ using EEP.BL.Classes;
 using EEP.Entities;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EEP.API.Controllers
 {
-    [Authorize]
-    [RoutePrefix("api/projects")]
+    // [Authorize]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProjectsController : ApiController
     {
-        private ProjectService _projectService;
+        private IProjectService _projectService;
 
-        public ProjectsController(ProjectService projectService)
+        public ProjectsController(IProjectService projectService)
         {
             _projectService = projectService;
         }
@@ -40,8 +41,9 @@ namespace EEP.API.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        [Route("create")]
+         [HttpPost]
+       // [EnableCors(origins: "http://www.example.com", headers: "*", methods: "get,post")]
+      //  [Route("create")]
         public async Task<IHttpActionResult> CreateProject(ProjectBindingModel projectModel)
         {
             if (!ModelState.IsValid)
@@ -79,7 +81,7 @@ namespace EEP.API.Controllers
             if (result == null)
             {
                 return BadRequest();
-            }
+            } 
 
             return Json(project);
         }

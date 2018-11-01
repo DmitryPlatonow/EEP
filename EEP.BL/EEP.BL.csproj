@@ -125,6 +125,8 @@
     <Compile Include="Classes\EmailService.cs" />
     <Compile Include="Classes\EmployeeService.cs" />
     <Compile Include="Classes\ICRUDService.cs" />
+    <Compile Include="Classes\IEmployeeService.cs" />
+    <Compile Include="Classes\IProjectService.cs" />
     <Compile Include="Classes\IUserService.cs" />
     <Compile Include="Classes\ProjectService.cs" />
     <Compile Include="Classes\RoleManager.cs" />

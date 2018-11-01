@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace EEP.Entities
         public bool IsLocked { get; set; }
 
         [Required]
+        [Column(TypeName = "datetime2")]
         public DateTime DateCreated { get; set; }
 
         //[Required]

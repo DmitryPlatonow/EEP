@@ -13,16 +13,18 @@ namespace EEP.Entities
         public int ProjectId { get; set; }
 
         [MaxLength(75), MinLength(2)]
-        public string Name { get; set; }
+        public string ProjectName { get; set; }
 
         [MaxLength(-1)]
         public string Description { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime StartProjectDate { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime EndProjectDate { get; set; }
 
         [Required]
         public ProjectStatus ProjectStatus { get; set; }

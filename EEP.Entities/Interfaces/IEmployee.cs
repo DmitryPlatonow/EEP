@@ -9,6 +9,6 @@ namespace EEP.Entities.Interfaces
 
         User User { get; set; }
 
-        ICollection<ParticipationHistoryInProject> ParticipationHistoryInProject { get; set; }
+        ICollection<ProjectParticipationHistory> ParticipationHistoryInProject { get; set; }
     }
 }

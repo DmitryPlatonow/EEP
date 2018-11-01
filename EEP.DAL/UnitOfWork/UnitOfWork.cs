@@ -18,7 +18,7 @@ namespace EEP.DAL.UnitOfWork
 
         private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
-        private GenericRepository<ParticipationHistoryInProject> _participationHistoryInProjectRepository;
+        private GenericRepository<ProjectParticipationHistory> _participationHistoryInProjectRepository;
 
 
         public GenericRepository<User> UserRepository
@@ -69,13 +69,13 @@ namespace EEP.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<ParticipationHistoryInProject> HistoryParticipationRepository
+        public GenericRepository<ProjectParticipationHistory> HistoryParticipationRepository
         {
             get
             {
                 if (_participationHistoryInProjectRepository == null)
                 {
-                    _participationHistoryInProjectRepository = new GenericRepository<ParticipationHistoryInProject>(_context);
+                    _participationHistoryInProjectRepository = new GenericRepository<ProjectParticipationHistory>(_context);
                 }
                 return _participationHistoryInProjectRepository;
             }

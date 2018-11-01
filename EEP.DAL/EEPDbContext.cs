@@ -19,7 +19,7 @@ namespace EEP.DAL
 
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<ParticipationHistoryInProject> ParticipationHistoryInProjects { get; set; }
+        public virtual DbSet<ProjectParticipationHistory> ParticipationHistoryInProjects { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace EEP.DAL
 
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Project>().ToTable("Projects");
-            modelBuilder.Entity<ParticipationHistoryInProject>().ToTable("ParticipationHistoryInProjects");
+            modelBuilder.Entity<ProjectParticipationHistory>().ToTable("ProjectParticipationHistorys");
 
 
         }

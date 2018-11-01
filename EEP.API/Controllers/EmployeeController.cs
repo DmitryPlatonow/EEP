@@ -7,11 +7,13 @@ using System.Web.Http;
 
 namespace EEP.API.Controllers
 {
+  //  [Authorize]
+    [RoutePrefix("api/employees")]
     public class EmployeeController : ApiController
     {
-        private EmployeeService _employeeService;
+        private IEmployeeService _employeeService;
 
-        public EmployeeController(EmployeeService employeeService)
+        public EmployeeController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
         }
