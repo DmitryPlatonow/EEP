@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using EEP.Entities.Helpers;
 
 namespace EEP.Entities
 {
@@ -19,11 +21,15 @@ namespace EEP.Entities
         public string Description { get; set; }
 
         [Required]
-        [Column(TypeName = "datetime2")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime StartProjectDate { get; set; }
 
         [Required]
-        [Column(TypeName = "datetime2")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime EndProjectDate { get; set; }
 
         [Required]

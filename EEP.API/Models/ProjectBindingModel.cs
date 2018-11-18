@@ -17,16 +17,16 @@ namespace EEP.API.Models
         public string Description { get; set; }
 
         [Required]
-        [DataType("datetime2")]
+        [DataType(DataType.Date)]
         public DateTime StartProjectDate { get; set; }
 
         [Required]
-        [DataType("datetime2")]
+        [DataType("date")]
         public DateTime EndProjectDate { get; set; }
 
         [Required]
         public ProjectStatus ProjectState { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public  ICollection<Employee> Employees { get; set; }
     }
 }

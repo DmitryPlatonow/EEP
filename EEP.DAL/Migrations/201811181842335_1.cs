@@ -22,7 +22,7 @@ namespace EEP.DAL.Migrations
                 .Index(t => t.User_Id);
             
             CreateTable(
-                "dbo.ParticipationHistoryInProjects",
+                "dbo.ProjectParticipationHistorys",
                 c => new
                     {
                         EmployeeId = c.Int(nullable: false),
@@ -30,9 +30,9 @@ namespace EEP.DAL.Migrations
                         Schedule = c.Int(nullable: false),
                         ScheduleIsDayOfWeek = c.Boolean(nullable: false),
                         Employment = c.Int(nullable: false),
-                        StartDate = c.DateTime(nullable: false),
-                        EndDate = c.DateTime(nullable: false),
-                        RealEndDate = c.DateTime(),
+                        StartDateParticipation = c.DateTime(nullable: false),
+                        EndDateParticipation = c.DateTime(nullable: false),
+                        RealEndDateParticipation = c.DateTime(),
                     })
                 .PrimaryKey(t => new { t.EmployeeId, t.ProjectId })
                 .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
@@ -45,10 +45,10 @@ namespace EEP.DAL.Migrations
                 c => new
                     {
                         ProjectId = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 75),
+                        ProjectName = c.String(maxLength: 75),
                         Description = c.String(),
-                        StartDate = c.DateTime(nullable: false),
-                        EndDate = c.DateTime(nullable: false),
+                        StartProjectDate = c.DateTime(nullable: false),
+                        EndProjectDate = c.DateTime(nullable: false),
                         ProjectStatus = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProjectId);
@@ -62,7 +62,7 @@ namespace EEP.DAL.Migrations
                         LastName = c.String(maxLength: 50),
                         EmployeeRoleInProject = c.Int(nullable: false),
                         IsLocked = c.Boolean(nullable: false),
-                        DateCreated = c.DateTime(nullable: false),
+                        DateCreated = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -139,17 +139,17 @@ namespace EEP.DAL.Migrations
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
             DropForeignKey("dbo.UserLogins", "UserId", "dbo.Users");
             DropForeignKey("dbo.UserClaims", "UserId", "dbo.Users");
-            DropForeignKey("dbo.ParticipationHistoryInProjects", "ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.ProjectParticipationHistorys", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.Employees", "Project_ProjectId", "dbo.Projects");
-            DropForeignKey("dbo.ParticipationHistoryInProjects", "EmployeeId", "dbo.Employees");
+            DropForeignKey("dbo.ProjectParticipationHistorys", "EmployeeId", "dbo.Employees");
             DropIndex("dbo.Roles", "RoleNameIndex");
             DropIndex("dbo.UserRoles", new[] { "RoleId" });
             DropIndex("dbo.UserRoles", new[] { "UserId" });
             DropIndex("dbo.UserLogins", new[] { "UserId" });
             DropIndex("dbo.UserClaims", new[] { "UserId" });
             DropIndex("dbo.Users", "UserNameIndex");
-            DropIndex("dbo.ParticipationHistoryInProjects", new[] { "ProjectId" });
-            DropIndex("dbo.ParticipationHistoryInProjects", new[] { "EmployeeId" });
+            DropIndex("dbo.ProjectParticipationHistorys", new[] { "ProjectId" });
+            DropIndex("dbo.ProjectParticipationHistorys", new[] { "EmployeeId" });
             DropIndex("dbo.Employees", new[] { "User_Id" });
             DropIndex("dbo.Employees", new[] { "Project_ProjectId" });
             DropTable("dbo.Roles");
@@ -158,7 +158,7 @@ namespace EEP.DAL.Migrations
             DropTable("dbo.UserClaims");
             DropTable("dbo.Users");
             DropTable("dbo.Projects");
-            DropTable("dbo.ParticipationHistoryInProjects");
+            DropTable("dbo.ProjectParticipationHistorys");
             DropTable("dbo.Employees");
         }
     }

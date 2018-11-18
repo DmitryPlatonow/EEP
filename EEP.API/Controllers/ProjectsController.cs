@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using EEP.API.Helper;
 using EEP.API.Models;
 using EEP.BL.Classes;
 using EEP.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -9,6 +12,7 @@ using System.Web.Http.Cors;
 namespace EEP.API.Controllers
 {
     // [Authorize]
+    [CustomJson]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProjectsController : ApiController
     {
@@ -22,11 +26,10 @@ namespace EEP.API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
-            return Json(await _projectService.GetAllAsync());
+            return Ok(await _projectService.GetAllAsync());
         }
 
         [HttpGet]
-        [Route("{id:int}", Name = "GetProjectById")]
         public async Task<IHttpActionResult> GetProjectById(int id)
         {
             if (id == null)
@@ -36,14 +39,13 @@ namespace EEP.API.Controllers
             var project = await _projectService.GetByIdAsync(id);
             if (project != null)
             {
-                return Json(project);
+                return Ok(project);
             }
             return NotFound();
         }
 
-         [HttpPost]
-       // [EnableCors(origins: "http://www.example.com", headers: "*", methods: "get,post")]
-      //  [Route("create")]
+
+        [HttpPost]
         public async Task<IHttpActionResult> CreateProject(ProjectBindingModel projectModel)
         {
             if (!ModelState.IsValid)
@@ -56,12 +58,7 @@ namespace EEP.API.Controllers
 
             var result = await _projectService.CreateAsync(project);
 
-            if (result == null)
-            {
-                return BadRequest();
-            }
-
-            return Json(project);
+            return Ok(project);
         }
 
         [HttpPatch]
@@ -81,9 +78,9 @@ namespace EEP.API.Controllers
             if (result == null)
             {
                 return BadRequest();
-            } 
+            }
 
-            return Json(project);
+            return Ok(project);
         }
 
         [HttpDelete]

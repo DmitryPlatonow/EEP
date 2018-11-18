@@ -1,4 +1,6 @@
 ﻿using EEP.Entities.Enums;
+using EEP.Entities.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,14 +34,19 @@ namespace EEP.Entities
         public int Employment { get; set; }
 
         [Required]
-        [Column(TypeName = "datetime2")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime StartDateParticipation { get; set; }
 
         [Required]
-        [Column(TypeName = "datetime2")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime EndDateParticipation { get; set; }
 
-        [DataType("datetime2")]
+        [Column(TypeName = "date")]
+        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
         public DateTime? RealEndDateParticipation { get; set; }
     }
 }

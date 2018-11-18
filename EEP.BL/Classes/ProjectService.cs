@@ -22,11 +22,7 @@ namespace EEP.BL.Classes
         {
              await _unitOfWork.ProjectRepository.AddAsync(project);
 
-            //if (result.Exception != null)
-            //{
-            //    throw new UserFriendlyException("Server Error");
-
-            //}
+      
             await _unitOfWork.CommitAsync();
 
             return project;
@@ -52,6 +48,7 @@ namespace EEP.BL.Classes
             {
                 throw new UserFriendlyException(404, "Not Found");
             }
+       //     var outProject = new Project { ProjectId = project.ProjectId, Description = project.Description, Employees = project.Employees, ProjectName = project.ProjectName, ProjectStatus = project.ProjectStatus, EndProjectDate = project.EndProjectDate.ToShortDateString() }; 
             return project;
         }
 
