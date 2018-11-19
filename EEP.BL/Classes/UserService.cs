@@ -8,11 +8,11 @@ using System.Web.Http;
 namespace EEP.BL.Classes
 {
     public class UserService : IUserService
-                                    
+
     {
         private readonly IUnitOfWork _unitOfWork;
         private UserManager _userManager;
-        
+
         public UserService(IUnitOfWork unitOfWork, UserManager userManager)
         {
             _unitOfWork = unitOfWork;
@@ -20,7 +20,7 @@ namespace EEP.BL.Classes
         }
 
 
-        public async Task<User> CreateAsync(User user)
+        public async Task<User> CreateAsync(User user, string role)
         {
             var userSave = new User()
             {
@@ -28,23 +28,16 @@ namespace EEP.BL.Classes
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 DateCreated = DateTime.Now,
-                UserName= user.Email
+                UserName = user.Email
             };
+
             var password = GetRandomPassword();
+
             var addUserResult = await _userManager.CreateAsync(userSave, password);
 
-            foreach (var item in user.Roles)
-            {
-                var userAddToRoleresult = await _userManager.AddToRoleAsync(user.Id, item.ToString());
-            }
+            var userAddToRoleresult = await _userManager.AddToRoleAsync(userSave.Id, role);
 
-            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("YourAppName");
-            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
-
-            string code = await _userManager.GenerateEmailConfirmationTokenAsync(userSave.Id);
-            var callbackUrl = userSave.Id + code;
-
-            await _userManager.SendEmailAsync(userSave.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            await SendEmail(userSave);
 
             return userSave;
         }
@@ -55,9 +48,9 @@ namespace EEP.BL.Classes
 
             if (user == null)
             {
-                return null;               
+                return null;
             }
-            return user;           
+            return user;
         }
 
         public async Task<User> Ge(string email)
@@ -86,6 +79,18 @@ namespace EEP.BL.Classes
             var finalString = new string(stringChars);
 
             return finalString;
+        }
+
+        private async Task SendEmail(User user)
+        {
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("EEP");
+            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
+
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = user.Id + code;
+
+            await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
         }
 
 

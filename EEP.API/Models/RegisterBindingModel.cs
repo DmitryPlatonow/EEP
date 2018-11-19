@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EEP.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace EEP.API.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Role")]
         public string Role { get; set; }
 

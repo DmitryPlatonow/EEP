@@ -81,28 +81,13 @@ namespace EEP.API.Controllers
             User user = new User();
             Mapper.Map(createUserModel, user);
 
-            var result = await _userService.CreateAsync(user);
-
-
-
-          
+            var result = await _userService.CreateAsync(user, createUserModel.Role);        
 
 
             if (result == null)
             {
                 return BadRequest();
             }
-
-           
-
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(result.Id);
-
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = result.Id, code = code }));
-
-            await UserManager.SendEmailAsync(result.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = result.Id }));
-
             return Ok(result);
         }
 

@@ -21,8 +21,6 @@ namespace EEP.Entities
         [Column(TypeName = "datetime2")]
         public DateTime DateCreated { get; set; }
 
-        [Required]
-        public Role Role { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
         {

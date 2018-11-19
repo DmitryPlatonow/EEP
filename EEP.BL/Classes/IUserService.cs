@@ -6,7 +6,7 @@ namespace EEP.BL.Classes
     public interface IUserService
     {
         Task<User> GetByIdAsync(string id);
-        Task<User> CreateAsync(User user);
+        Task<User> CreateAsync(User user, string role);
 
 
 
