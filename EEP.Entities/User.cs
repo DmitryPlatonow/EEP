@@ -16,19 +16,13 @@ namespace EEP.Entities
 
         [MaxLength(50), MinLength(2)]
         public string LastName { get; set; }
-
-        [Required]
-        public EmployeeRoleInProject EmployeeRoleInProject { get; set; }
-
-        [Required]
-        public bool IsLocked { get; set; }
-
+        
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime DateCreated { get; set; }
 
-        //[Required]
-        //public Role Role { get; set; }
+        [Required]
+        public Role Role { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
         {

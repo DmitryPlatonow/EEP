@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
 using EEP.API.Models;
 using EEP.BL.Classes;
-using EEP.DAL;
 using EEP.Entities;
-using EEP.Entities.Dto;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -73,7 +69,7 @@ namespace EEP.API.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         [Route("create")]
         public async Task<IHttpActionResult> CreateUser(RegisterBindingModel createUserModel)
         {
@@ -82,34 +78,32 @@ namespace EEP.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new User()
+            User user = new User();
+            Mapper.Map(createUserModel, user);
+
+            var result = await _userService.CreateAsync(user);
+
+
+
+          
+
+
+            if (result == null)
             {
-                UserName = createUserModel.Username,
-                Email = createUserModel.Email,
-                FirstName = createUserModel.FirstName,
-                LastName = createUserModel.LastName,
-                DateCreated = DateTime.Now.Date,
-            };
-
-            var addUserResult = await UserManager.CreateAsync(user, createUserModel.Password);
-
-
-            if (!addUserResult.Succeeded)
-            {
-                return GetErrorResult(addUserResult);
+                return BadRequest();
             }
 
-            var userAddToRoleresult = await UserManager.AddToRoleAsync(user.Id, createUserModel.RoleName);
+           
 
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(result.Id);
 
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = result.Id, code = code }));
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            await UserManager.SendEmailAsync(result.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = result.Id }));
 
-            return Created(locationHeader, TheModelFactory.Create(user));
+            return Ok(result);
         }
 
 

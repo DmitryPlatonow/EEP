@@ -1,17 +1,9 @@
 ﻿using EEP.DAL.Interfaces;
-using AutoMapper;
 using EEP.Entities;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using EEP.Entities.Dto;
-using EEP.DAL;
-using Microsoft.AspNet.Identity.EntityFramework;
-using EEP.DAL.UnitOfWork;
-using EEP.DAL.Repository.Extensions;
+using System.Security.Policy;
+using System.Web.Http;
 
 namespace EEP.BL.Classes
 {
@@ -25,6 +17,36 @@ namespace EEP.BL.Classes
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+        }
+
+
+        public async Task<User> CreateAsync(User user)
+        {
+            var userSave = new User()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateCreated = DateTime.Now,
+                UserName= user.Email
+            };
+            var password = GetRandomPassword();
+            var addUserResult = await _userManager.CreateAsync(userSave, password);
+
+            foreach (var item in user.Roles)
+            {
+                var userAddToRoleresult = await _userManager.AddToRoleAsync(user.Id, item.ToString());
+            }
+
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("YourAppName");
+            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
+
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(userSave.Id);
+            var callbackUrl = userSave.Id + code;
+
+            await _userManager.SendEmailAsync(userSave.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return userSave;
         }
 
         public async Task<User> GetByIdAsync(string id)
@@ -47,6 +69,23 @@ namespace EEP.BL.Classes
                 return null;
             }
             return user;
+        }
+
+
+        private string GetRandomPassword()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[12];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new string(stringChars);
+
+            return finalString;
         }
 
 

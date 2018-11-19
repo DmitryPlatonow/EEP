@@ -1,4 +1,5 @@
 ﻿
+using EEP.Entities.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,10 @@ namespace EEP.Entities
         
         [Required]
         public User User { get; set; }
+
+
+        [Required]
+        public EmployeeRoleInProject EmployeeRoleInProject { get; set; }
 
         public virtual ICollection<ProjectParticipationHistory> ParticipationHistoryInProject { get; set; }
 
