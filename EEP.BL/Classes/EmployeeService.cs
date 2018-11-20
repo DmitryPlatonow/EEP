@@ -55,7 +55,7 @@ namespace EEP.BL.Classes
         // U
         public async Task<Employee> UpdateAsync(Employee employee)
         {
-            var result = _unitOfWork.EmployeeRepository.UpdateAsync(employee);
+            var result = _unitOfWork.EmployeeRepository.UpdateAsync(employee, employee.Id);
 
             if (result.Exception != null)
             {

@@ -101,11 +101,20 @@ namespace EEP.DAL.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async virtual Task UpdateAsync(TEntity entityToUpdate)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entityToUpdate, int id)
         {
-            _dbSet.Attach(entityToUpdate);
-            _context.Entry(entityToUpdate).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            if (entityToUpdate == null)
+                return null;
+
+            
+
+            TEntity existing = await _context.Set<TEntity>().FindAsync(id);
+            if (existing != null)
+            {
+                _context.Entry(existing).CurrentValues.SetValues(entityToUpdate);
+                await _context.SaveChangesAsync();
+            }
+            return existing;
         }
     }
 }

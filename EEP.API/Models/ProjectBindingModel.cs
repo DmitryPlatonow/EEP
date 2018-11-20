@@ -10,6 +10,8 @@ namespace EEP.API.Models
 {
     public class ProjectBindingModel
     {
+        public int ProjectId { get; set; }
+
         [MaxLength(75), MinLength(2)]
         public string ProjectName { get; set; }
 

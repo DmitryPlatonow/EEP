@@ -22,7 +22,7 @@ namespace EEP.DAL.Interfaces
         Task AddAsync(TEntity entity);
         Task DeleteAsync(object id);
         Task DeleteAsync(TEntity entityToDelete);
-        Task UpdateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity, int id);
 
         //  Task DeleteAllAsync(List<TEntity> entity);
     }

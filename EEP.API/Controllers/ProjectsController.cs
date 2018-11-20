@@ -62,7 +62,6 @@ namespace EEP.API.Controllers
         }
 
         [HttpPatch]
-        [Route("update")]
         public async Task<IHttpActionResult> UpdateProject(ProjectBindingModel projectModel)
         {
             if (!ModelState.IsValid)

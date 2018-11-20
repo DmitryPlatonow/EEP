@@ -55,12 +55,10 @@ namespace EEP.BL.Classes
         // U
         public async Task<Project> UpdateAsync(Project project)
         {
-            var result = _unitOfWork.ProjectRepository.UpdateAsync(project);
+            
+            await _unitOfWork.ProjectRepository.UpdateAsync(project, project.ProjectId);
 
-            if (result.Exception != null)
-            {
-                throw new UserFriendlyException("Server Error");
-            }
+       
             await _unitOfWork.CommitAsync();
 
             return project;
