@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EEP.API.Models;
 using EEP.Entities;
-using EEP.Entities.Dto;
 
 namespace EEP.API.Mappers
 {
@@ -11,7 +10,6 @@ namespace EEP.API.Mappers
         {
             CreateMap<RegisterBindingModel, User>();
             CreateMap<LoginBindingModel, User>();
-            CreateMap<RegisterBindingModel, UserDto>();
             CreateMap<ProjectBindingModel, Project>();
             CreateMap<EmloyeeBindingModel, Employee>();
         }

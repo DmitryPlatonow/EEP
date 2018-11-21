@@ -15,7 +15,6 @@ namespace EEP.Entities
         [Required]
         public User User { get; set; }
 
-
         [Required]
         public EmployeeRoleInProject EmployeeRoleInProject { get; set; }
 

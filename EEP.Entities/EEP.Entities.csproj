@@ -59,8 +59,9 @@
   <ItemGroup>
     <Compile Include="Dto\DtoModels.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="Enums\DaysOfWeek.cs" />
     <Compile Include="Enums\EmployeeRoleInProject.cs" />
-    <Compile Include="Enums\ProjectStatus.cs" />
+    <Compile Include="Enums\ProjectState.cs" />
     <Compile Include="Enums\TypeOfParticipationInProject.cs" />
     <Compile Include="Helpers\DateFormatConverter.cs" />
     <Compile Include="UserFriendlyException.cs" />

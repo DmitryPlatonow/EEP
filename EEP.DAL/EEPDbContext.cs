@@ -20,6 +20,7 @@ namespace EEP.DAL
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectParticipationHistory> ParticipationHistoryInProjects { get; set; }
+       
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -56,22 +56,31 @@ namespace EEP.BL.Classes
         public async Task<Project> UpdateAsync(Project project)
         {
             
-            await _unitOfWork.ProjectRepository.UpdateAsync(project, project.ProjectId);
+            var result = await _unitOfWork.ProjectRepository.UpdateAsync(project, project.ProjectId);
 
+            if (result == null)
+            {
+                throw new UserFriendlyException(500, "Internal server Error");
+            }
        
             await _unitOfWork.CommitAsync();
 
-            return project;
+            return result;
         }
         
         //D
         public async Task DeleteAsync(int id)
         {
-            var result =  _unitOfWork.ProjectRepository.DeleteAsync(id);
-            if (result == null)
+            try
             {
-                throw new UserFriendlyException(404, "Not Found");
+                await _unitOfWork.ProjectRepository.DeleteAsync(id);
             }
+            catch (Exception)
+            {
+
+                throw new UserFriendlyException(501, "Delete ex");
+            }
+   
             await _unitOfWork.CommitAsync();
         }
 

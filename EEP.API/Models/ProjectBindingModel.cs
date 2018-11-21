@@ -10,7 +10,7 @@ namespace EEP.API.Models
 {
     public class ProjectBindingModel
     {
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
 
         [MaxLength(75), MinLength(2)]
         public string ProjectName { get; set; }
@@ -27,7 +27,7 @@ namespace EEP.API.Models
         public DateTime EndProjectDate { get; set; }
 
         [Required]
-        public ProjectStatus ProjectState { get; set; }
+        public ProjectState ProjectState { get; set; }
 
         public  ICollection<Employee> Employees { get; set; }
     }

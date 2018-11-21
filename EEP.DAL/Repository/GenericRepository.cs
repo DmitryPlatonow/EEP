@@ -86,8 +86,13 @@ namespace EEP.DAL.Repository
 
         public async virtual Task DeleteAsync(object id)
         {
-            var entityToDelete = _dbSet.Find(id);
-            await DeleteAsync(entityToDelete);
+            
+            TEntity entityToDelete = await _context.Set<TEntity>().FindAsync(id);
+            if (entityToDelete != null)
+            {
+                await DeleteAsync(entityToDelete);
+            }
+            
         }
 
         public async virtual Task DeleteAsync(TEntity entityToDelete)
@@ -101,12 +106,10 @@ namespace EEP.DAL.Repository
             await _context.SaveChangesAsync();
         }
 
-        public virtual async Task<TEntity> UpdateAsync(TEntity entityToUpdate, int id)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entityToUpdate, object id)
         {
             if (entityToUpdate == null)
-                return null;
-
-            
+                return null;            
 
             TEntity existing = await _context.Set<TEntity>().FindAsync(id);
             if (existing != null)

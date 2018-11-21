@@ -83,17 +83,25 @@ namespace EEP.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
         public async Task<IHttpActionResult> DeleteProject(int id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
+            try
+            {
+                await _projectService.DeleteAsync(id);
+                return Ok(id);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest();
+            }
+            
 
-            await _projectService.DeleteAsync(id);
-
-            return Ok();
+                
+            
         }
     }
 }

@@ -33,7 +33,7 @@ namespace EEP.Entities
         public DateTime EndProjectDate { get; set; }
 
         [Required]
-        public ProjectStatus ProjectStatus { get; set; }
+        public ProjectState ProjectState { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
     }

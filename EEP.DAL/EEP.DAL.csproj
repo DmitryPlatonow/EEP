@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201811182140556_ny takoe.Designer.cs">
       <DependentUpon>201811182140556_ny takoe.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811211156123_state.cs" />
+    <Compile Include="Migrations\201811211156123_state.Designer.cs">
+      <DependentUpon>201811211156123_state.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Extensions\UserExtensions.cs" />
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811182140556_ny takoe.resx">
       <DependentUpon>201811182140556_ny takoe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811211156123_state.resx">
+      <DependentUpon>201811211156123_state.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

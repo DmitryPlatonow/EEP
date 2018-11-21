@@ -2,6 +2,7 @@
 using EEP.Entities.Helpers;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,8 +31,10 @@ namespace EEP.Entities
         [Required]
         public bool ScheduleIsDayOfWeek { get; set; }
 
-        [Required]
+        
         public int Employment { get; set; }
+
+        public List<DaysOfWeek> DaysOfWeek { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
