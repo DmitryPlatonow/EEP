@@ -35,6 +35,6 @@ namespace EEP.Entities
         [Required]
         public ProjectState ProjectState { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

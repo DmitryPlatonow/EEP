@@ -16,9 +16,9 @@ namespace EEP.DAL.UnitOfWork
         private GenericRepository<User> _userRepository;
         private GenericRepository<Role> _roleRepository;
 
-        private GenericRepository<Employee> _employeeRepository;
+       // private GenericRepository<Employee> _employeeRepository;
         private GenericRepository<Project> _projectRepository;
-        private GenericRepository<ProjectParticipationHistory> _participationHistoryInProjectRepository;
+        private GenericRepository<ProjectParticipationHistory> _projectParticipationHistoryRepository;
 
 
         public GenericRepository<User> UserRepository
@@ -45,17 +45,17 @@ namespace EEP.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<Employee> EmployeeRepository
-        {
-            get
-            {
-                if (_employeeRepository == null)
-                {
-                    _employeeRepository = new GenericRepository<Employee>(_context);
-                }
-                return _employeeRepository;
-            }
-        }
+        //public GenericRepository<Employee> EmployeeRepository
+        //{
+        //    get
+        //    {
+        //        if (_employeeRepository == null)
+        //        {
+        //            _employeeRepository = new GenericRepository<Employee>(_context);
+        //        }
+        //        return _employeeRepository;
+        //    }
+        //}
 
         public GenericRepository<Project> ProjectRepository
         {
@@ -69,15 +69,15 @@ namespace EEP.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<ProjectParticipationHistory> HistoryParticipationRepository
+        public GenericRepository<ProjectParticipationHistory> ProjectParticipationHistory
         {
             get
             {
-                if (_participationHistoryInProjectRepository == null)
+                if (_projectParticipationHistoryRepository == null)
                 {
-                    _participationHistoryInProjectRepository = new GenericRepository<ProjectParticipationHistory>(_context);
+                    _projectParticipationHistoryRepository = new GenericRepository<ProjectParticipationHistory>(_context);
                 }
-                return _participationHistoryInProjectRepository;
+                return _projectParticipationHistoryRepository;
             }
         }
 

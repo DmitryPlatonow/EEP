@@ -10,7 +10,10 @@ namespace EEP.API.Mappers
         {
             CreateMap<User, RegisterBindingModel>();
             CreateMap<User, LoginBindingModel>();
+
+            CreateMap<User, UserBindModel>();
             CreateMap<Project, ProjectBindingModel>();
+            CreateMap<ProjectParticipationHistory, ProjectParticipationHistoryBindingModel>();
         }
 
 

@@ -56,14 +56,15 @@ namespace EEP.API.App_Start
                             .As<IProjectService>()
                             .InstancePerLifetimeScope();
 
-            containerBuilder.RegisterType<EmployeeService>()
-                            .As<IEmployeeService>()
-                            .InstancePerLifetimeScope();
-
-            //containerBuilder.RegisterAssemblyTypes(System.AppDomain.CurrentDomain.GetAssemblies())
-            //                .Where(x => x.Name.EndsWith("Service"))
-            //                .AsImplementedInterfaces()
+            //containerBuilder.RegisterType<EmployeeService>()
+            //                .As<IEmployeeService>()
             //                .InstancePerLifetimeScope();
+
+            containerBuilder.RegisterType<ProjectParticipationHistoryService>()
+                            .As<IProjectParticipationHistoryService>()
+            .AsImplementedInterfaces()
+                            
+                            .InstancePerLifetimeScope();
 
 
             // register UserManager

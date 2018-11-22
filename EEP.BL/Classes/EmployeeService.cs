@@ -1,80 +1,80 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using EEP.DAL.UnitOfWork;
-using EEP.Entities;
+﻿//using System.Collections.Generic;
+//using System.Threading.Tasks;
+//using EEP.DAL.UnitOfWork;
+//using EEP.Entities;
 
-namespace EEP.BL.Classes
-{
-    public class EmployeeService : IEmployeeService
-    {
-        private readonly UnitOfWork _unitOfWork;
+//namespace EEP.BL.Classes
+//{
+//    public class EmployeeService : IEmployeeService
+//    {
+//        private readonly UnitOfWork _unitOfWork;
 
-        public EmployeeService()
-        {
-            _unitOfWork = new UnitOfWork();
-        }
+//        public EmployeeService()
+//        {
+//            _unitOfWork = new UnitOfWork();
+//        }
 
-        //C create
-        public async Task<Employee> CreateAsync(Employee employee)
-        {
-            var result = _unitOfWork.EmployeeRepository.AddAsync(employee);
+//        //C create
+//        public async Task<Employee> CreateAsync(Employee employee)
+//        {
+//            var result = _unitOfWork.EmployeeRepository.AddAsync(employee);
 
-            if (result.Exception != null)
-            {
-                throw new UserFriendlyException("Server Error");
+//            if (result.Exception != null)
+//            {
+//                throw new UserFriendlyException("Server Error");
 
-            }
-            await _unitOfWork.CommitAsync();
+//            }
+//            await _unitOfWork.CommitAsync();
 
-            return employee;
-        }
+//            return employee;
+//        }
 
-        //R Get all project
-        public async Task<IEnumerable<Employee>> GetAllAsync()
-        {
-            var listEmployee = await _unitOfWork.EmployeeRepository.GetAllAsync();
-            if (listEmployee == null)
-            {
-                throw new UserFriendlyException(404, "Not Found");
-            }
+//        //R Get all project
+//        public async Task<IEnumerable<Employee>> GetAllAsync()
+//        {
+//            var listEmployee = await _unitOfWork.EmployeeRepository.GetAllAsync();
+//            if (listEmployee == null)
+//            {
+//                throw new UserFriendlyException(404, "Not Found");
+//            }
 
-            return listEmployee;
-        }
+//            return listEmployee;
+//        }
 
-        public async Task<Employee> GetByIdAsync(int id)
-        {
-            var employee = await _unitOfWork.EmployeeRepository.GetByIdAsync(id);
+//        public async Task<Employee> GetByIdAsync(int id)
+//        {
+//            var employee = await _unitOfWork.EmployeeRepository.GetByIdAsync(id);
 
-            if (employee == null)
-            {
-                throw new UserFriendlyException(404, "Not Found");
-            }
-            return employee;
-        }
+//            if (employee == null)
+//            {
+//                throw new UserFriendlyException(404, "Not Found");
+//            }
+//            return employee;
+//        }
 
-        // U
-        public async Task<Employee> UpdateAsync(Employee employee)
-        {
-            var result = _unitOfWork.EmployeeRepository.UpdateAsync(employee, employee.Id);
+//        // U
+//        public async Task<Employee> UpdateAsync(Employee employee)
+//        {
+//            var result = _unitOfWork.EmployeeRepository.UpdateAsync(employee, employee.Id);
 
-            if (result.Exception != null)
-            {
-                throw new UserFriendlyException("Server Error");
-            }
-            await _unitOfWork.CommitAsync();
+//            if (result.Exception != null)
+//            {
+//                throw new UserFriendlyException("Server Error");
+//            }
+//            await _unitOfWork.CommitAsync();
 
-            return employee;
-        }
+//            return employee;
+//        }
 
-        //D
-        public async Task DeleteAsync(int id)
-        {
-            var result = _unitOfWork.EmployeeRepository.DeleteAsync(id);
-            if (result == null)
-            {
-                throw new UserFriendlyException(404, "Not Found");
-            }
-            await _unitOfWork.CommitAsync();
-        }
-    }
-}
+//        //D
+//        public async Task DeleteAsync(int id)
+//        {
+//            var result = _unitOfWork.EmployeeRepository.DeleteAsync(id);
+//            if (result == null)
+//            {
+//                throw new UserFriendlyException(404, "Not Found");
+//            }
+//            await _unitOfWork.CommitAsync();
+//        }
+//    }
+//}

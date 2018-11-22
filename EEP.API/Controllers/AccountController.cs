@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EEP.API.Helper;
 using EEP.API.Models;
 using EEP.BL.Classes;
 using EEP.Entities;
@@ -6,15 +7,18 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EEP.API.Controllers
 {
-    [RoutePrefix("api/accounts")]
+    [CustomJson]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountsController : BaseApiController
     {
         private IUserService _userService;
@@ -32,11 +36,22 @@ namespace EEP.API.Controllers
 
         }
 
-       // [Authorize]
-        [Route("users")]
+        [HttpGet]
         public IHttpActionResult GetUsers()
         {
-            return Ok(UserManager.Users.ToList().Select(u => TheModelFactory.Create(u)));
+            var result = UserManager.Users.ToList();
+            List<UserBindModel> listReturnUser = new List<UserBindModel>();
+            
+           
+            foreach (var item in result)
+            {
+
+                UserBindModel returnVievUser = new UserBindModel();
+                Mapper.Map(item, returnVievUser);
+                listReturnUser.Add(returnVievUser);
+
+            }
+            return Ok(result);
         }
 
       //  [Authorize]

@@ -129,8 +129,10 @@
     <Compile Include="Classes\EmployeeService.cs" />
     <Compile Include="Classes\ICRUDService.cs" />
     <Compile Include="Classes\IEmployeeService.cs" />
+    <Compile Include="Classes\IProjectParticipationHistoryService.cs" />
     <Compile Include="Classes\IProjectService.cs" />
     <Compile Include="Classes\IUserService.cs" />
+    <Compile Include="Classes\ProjectParticipationHistoryService.cs" />
     <Compile Include="Classes\ProjectService.cs" />
     <Compile Include="Classes\RoleManager.cs" />
     <Compile Include="Classes\SignInManager.cs" />

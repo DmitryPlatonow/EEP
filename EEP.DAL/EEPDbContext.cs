@@ -17,7 +17,7 @@ namespace EEP.DAL
             Configuration.LazyLoadingEnabled = false;
         }
 
-        public virtual DbSet<Employee> Employees { get; set; }
+       // public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectParticipationHistory> ParticipationHistoryInProjects { get; set; }
        
@@ -34,7 +34,7 @@ namespace EEP.DAL
             modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
 
-            modelBuilder.Entity<Employee>().ToTable("Employees");
+          //  modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Project>().ToTable("Projects");
             modelBuilder.Entity<ProjectParticipationHistory>().ToTable("ProjectParticipationHistorys");
 

@@ -3,8 +3,6 @@ using EEP.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace EEP.API.Models
 {
@@ -29,6 +27,6 @@ namespace EEP.API.Models
         [Required]
         public ProjectState ProjectState { get; set; }
 
-        public  ICollection<Employee> Employees { get; set; }
+        public  ICollection<User> Users { get; set; }
     }
 }

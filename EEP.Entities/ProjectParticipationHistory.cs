@@ -11,12 +11,8 @@ namespace EEP.Entities
 {
     public class ProjectParticipationHistory
     {
-        [Key, ForeignKey("Employee")]
-        [Column("EmployeeId", Order = 0)]
-        public int EmployeeIdId { get; set; }
 
-        [Required]
-        public Employee Employee { get; set; }
+        public User User { get; set; }
 
         [Key, ForeignKey("Project")]
         [Column(Order = 1)]
@@ -30,16 +26,18 @@ namespace EEP.Entities
 
         [Required]
         public bool ScheduleIsDayOfWeek { get; set; }
-
         
         public int Employment { get; set; }
 
         public List<DaysOfWeek> DaysOfWeek { get; set; }
 
         [Required]
+        public EmployeeRoleInProject EmployeeRoleInProject { get; set; }
+
+        [Required]
         [DataType(DataType.Date)]
         [Column(TypeName = "Date")]
-        [JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [JsonConverter(typeof(DateFormatConverter), "YYYY-MM-DD")]
         public DateTime StartDateParticipation { get; set; }
 
         [Required]
