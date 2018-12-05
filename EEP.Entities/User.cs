@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace EEP.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid, UserLogin, UserRole, UserClaim>
     {
         [MaxLength(50), MinLength(2)]
         public string FirstName { get; set; }
 
         [MaxLength(50), MinLength(2)]
         public string LastName { get; set; }
-        
+
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime DateCreated { get; set; }
 
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, Guid> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);

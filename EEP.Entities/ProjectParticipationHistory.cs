@@ -11,8 +11,11 @@ namespace EEP.Entities
 {
     public class ProjectParticipationHistory
     {
+        [Key, ForeignKey("Employee")]
+        [Column("EmployeeId", Order = 0)]
+        public Guid EmployeeIdId { get; set; }
 
-        public User User { get; set; }
+        public Employee Employee { get; set; }
 
         [Key, ForeignKey("Project")]
         [Column(Order = 1)]

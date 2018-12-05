@@ -1,4 +1,5 @@
 ﻿using EEP.DAL;
+using EEP.DAL.Repository;
 using EEP.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
-    public class UserManager : UserManager<User>
+    public class UserManager : UserManager<User, Guid>
     {
-        public UserManager(IUserStore<User> store)
+        public UserManager(IUserStore<User, Guid> store)
             : base(store)
         {
         }
@@ -20,11 +21,11 @@ namespace EEP.BL.Classes
         public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
         {
 
-            var manager = new UserManager(new UserStore<User>(context.Get<EEPDbContext>()));
+            var manager = new UserManager(new UserStore(context.Get<EEPDbContext>()));
 
             manager.EmailService = new EmailService();
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<User>(manager)
+            manager.UserValidator = new UserValidator<User, Guid>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -40,7 +41,7 @@ namespace EEP.BL.Classes
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"))
+                manager.UserTokenProvider = new DataProtectorTokenProvider<User, Guid>(dataProtectionProvider.Create("ASP.NET Identity"))
                 {
                     //Code for email confirmation and reset password life time
                     

@@ -69,21 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EEPDbContext.cs" />
-    <Compile Include="Migrations\201811181842335_1.cs" />
-    <Compile Include="Migrations\201811181842335_1.Designer.cs">
-      <DependentUpon>201811181842335_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811182140556_ny takoe.cs" />
-    <Compile Include="Migrations\201811182140556_ny takoe.Designer.cs">
-      <DependentUpon>201811182140556_ny takoe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811211156123_state.cs" />
-    <Compile Include="Migrations\201811211156123_state.Designer.cs">
-      <DependentUpon>201811211156123_state.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811221330221_g.cs" />
-    <Compile Include="Migrations\201811221330221_g.Designer.cs">
-      <DependentUpon>201811221330221_g.cs</DependentUpon>
+    <Compile Include="Migrations\201812051550547_new.cs" />
+    <Compile Include="Migrations\201812051550547_new.Designer.cs">
+      <DependentUpon>201812051550547_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +79,8 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repository\RoleStore.cs" />
+    <Compile Include="Repository\UserStore.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,17 +96,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811181842335_1.resx">
-      <DependentUpon>201811181842335_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811182140556_ny takoe.resx">
-      <DependentUpon>201811182140556_ny takoe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811211156123_state.resx">
-      <DependentUpon>201811211156123_state.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811221330221_g.resx">
-      <DependentUpon>201811221330221_g.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812051550547_new.resx">
+      <DependentUpon>201812051550547_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

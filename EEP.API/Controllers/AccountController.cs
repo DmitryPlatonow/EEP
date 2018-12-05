@@ -55,34 +55,34 @@ namespace EEP.API.Controllers
         }
 
       //  [Authorize]
-        [Route("user/{id:guid}", Name = "GetUserById")]
-        public async Task<IHttpActionResult> GetUserById(string id)
-        {
-            var user = await _userService.GetByIdAsync(id);
-            // var user2 = await UserManager.GetByIdAsync(Id);
-            if (user != null)
-            {
-                return Ok(this.TheModelFactory.Create(user));
-            }
+        //[Route("user/{id:guid}", Name = "GetUserById")]
+        //public async Task<IHttpActionResult> GetUserById(string id)
+        //{
+        //    var user = await _userService.GetByIdAsync(id);
+        //    // var user2 = await UserManager.GetByIdAsync(Id);
+        //    if (user != null)
+        //    {
+        //        return Ok(this.TheModelFactory.Create(user));
+        //    }
 
-            return NotFound();
+        //    return NotFound();
 
-        }
+        //}
 
-        [Authorize]
-        [Route("user/{username}")]
-        public async Task<IHttpActionResult> GetUserByName(string username)
-        {
-            var user = await UserManager.FindByNameAsync(username);
+        //[Authorize]
+        //[Route("user/{username}")]
+        //public async Task<IHttpActionResult> GetUserByName(string username)
+        //{
+        //    var user = await UserManager.FindByNameAsync(username);
 
-            if (user != null)
-            {
-                return Ok(TheModelFactory.Create(user));
-            }
+        //    if (user != null)
+        //    {
+        //        return Ok(TheModelFactory.Create(user));
+        //    }
 
-            return NotFound();
+        //    return NotFound();
 
-        }
+        //}
 
        // [Authorize(Roles = "Admin")]
         [Route("create")]
@@ -108,50 +108,50 @@ namespace EEP.API.Controllers
 
 
 
-        [HttpGet]
-        [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
-        public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
-        {
-            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
-            {
-                ModelState.AddModelError("", "User Id and Code are required");
-                return BadRequest(ModelState);
-            }
+        //[HttpGet]
+        //[Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        //public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        //{
+        //    if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+        //    {
+        //        ModelState.AddModelError("", "User Id and Code are required");
+        //        return BadRequest(ModelState);
+        //    }
 
-            IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
+        //    IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
 
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
-            else
-            {
-                return GetErrorResult(result);
-            }
-        }
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return GetErrorResult(result);
+        //    }
+        //}
 
-        [Authorize]
-        [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[Authorize]
+        //[Route("ChangePassword")]
+        //public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+        //    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")] 
         [Route("user/{id:guid}")]
-        public async Task<IHttpActionResult> DeleteUser(string id)
+        public async Task<IHttpActionResult> DeleteUser(Guid id)
         {
 
             var appUser = await UserManager.FindByIdAsync(id);

@@ -68,7 +68,7 @@ namespace EEP.API.App_Start
 
 
             // register UserManager
-            containerBuilder.Register(c => new UserManager(new UserStore<User>(EEPDbContext.Create())))
+            containerBuilder.Register(c => new UserManager(new UserStore(EEPDbContext.Create())))
                             .As<UserManager>()
                             .InstancePerLifetimeScope();
 

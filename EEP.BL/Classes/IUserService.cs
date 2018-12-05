@@ -1,11 +1,12 @@
 ﻿using EEP.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace EEP.BL.Classes
 {
     public interface IUserService
     {
-        Task<User> GetByIdAsync(string id);
+        Task<User> GetByIdAsync(Guid id);
         Task<User> CreateAsync(User user, string role);
 
 

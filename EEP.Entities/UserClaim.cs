@@ -3,7 +3,7 @@ using System;
 
 namespace EEP.Entities
 {
-    public class UserClaim : IdentityUserClaim
+    public class UserClaim : IdentityUserClaim<Guid>
     {
     }
 }

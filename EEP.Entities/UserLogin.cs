@@ -3,8 +3,7 @@ using System;
 
 namespace EEP.Entities
 {
-    public class UserLogin : IdentityUserLogin
+    public class UserLogin : IdentityUserLogin<Guid>
     {
-
     }
 }

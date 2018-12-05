@@ -42,7 +42,7 @@ namespace EEP.BL.Classes
             return userSave;
         }
 
-        public async Task<User> GetByIdAsync(string id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -84,7 +84,7 @@ namespace EEP.BL.Classes
         private async Task SendEmail(User user)
         {
             var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("EEP");
-            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("EmailConfirmation"));
+            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User, Guid>(provider.Create("EmailConfirmation"));
 
             string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = user.Id + code;

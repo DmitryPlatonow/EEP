@@ -20,20 +20,20 @@ namespace EEP.API.Models
             _userManager = appUserManager;
         }
 
-        public UserReturnModel Create(User appUser)
-        {
-            return new UserReturnModel
-            {
-                Url = _UrlHelper.Link("GetUserById", new { id = appUser.Id }),
-                Id = appUser.Id,
-                UserName = appUser.UserName,
-                FullName = string.Format("{0} {1}", appUser.FirstName, appUser.LastName),
-                Email = appUser.Email,
-                EmailConfirmed = appUser.EmailConfirmed,             
-                JoinDate = appUser.DateCreated,
-                Roles = _userManager.GetRolesAsync(appUser.Id).Result,
-                Claims = _userManager.GetClaimsAsync(appUser.Id).Result
-            };
-        }
+        //public UserReturnModel Create(User appUser)
+        //{
+        //    //return new UserReturnModel
+        //    //{
+        //    //    Url = _UrlHelper.Link("GetUserById", new { id = appUser.Id }),
+        //    //    Id = appUser.Id,
+        //    //    UserName = appUser.UserName,
+        //    //    FullName = string.Format("{0} {1}", appUser.FirstName, appUser.LastName),
+        //    //    Email = appUser.Email,
+        //    //    EmailConfirmed = appUser.EmailConfirmed,             
+        //    //    JoinDate = appUser.DateCreated,
+        //    //    Roles = _userManager.GetRolesAsync(appUser.Id).Result,
+        //    //    Claims = _userManager.GetClaimsAsync(appUser.Id).Result
+        //    //};
+        //}
     }
 }

@@ -2,16 +2,15 @@ namespace EEP.DAL.Migrations
 {
     using EEP.Entities;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     public sealed class Configuration : DbMigrationsConfiguration<EEP.DAL.EEPDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
 
         }
 
@@ -19,33 +18,33 @@ namespace EEP.DAL.Migrations
         {
 
             {
-                var userManager = new UserManager<User>(new UserStore<User>(context));
-                userManager.UserValidator = new UserValidator<User>(userManager)
+                var userManager = new UserManager<User, Guid>(new EEP.DAL.Repository.UserStore(context));
+                userManager.UserValidator = new UserValidator<User, Guid>(userManager)
                 {
                     AllowOnlyAlphanumericUserNames = false
                 };
-                var roleManager = new RoleManager<Role>(new RoleStore<Role>(context));
+                var roleManager = new RoleManager<Role, Guid>(new EEP.DAL.Repository.RoleStore(context));
 
                 if (!roleManager.RoleExists("Admin"))
                 {
-                    roleManager.Create(new Role() { Name = "Admin" });
+                    roleManager.Create(new Role() { Id = new Guid() , Name = "Admin" });
                 }
 
 
-                if (!roleManager.RoleExists("Resurse Manager"))
-                {
-                    roleManager.Create(new Role() { Name = "Resurse Manager" });
-                }
+                //if (!roleManager.RoleExists("Resurse Manager"))
+                //{
+                //    roleManager.Create(new Role() { Id = new Guid(),  Name = "Resurse Manager" });
+                //}
 
-                if (!roleManager.RoleExists("Project Manager"))
-                {
-                    roleManager.Create(new Role() { Name = "Project Manager" });
-                }
+                //if (!roleManager.RoleExists("Project Manager"))
+                //{
+                //    roleManager.Create(new Role() { Id = new Guid(), Name = "Project Manager" });
+                //}
 
-                if (!roleManager.RoleExists("Employee"))
-                {
-                    roleManager.Create(new Role() { Name = "Employee" });
-                }
+                //if (!roleManager.RoleExists("Employee"))
+                //{
+                //    roleManager.Create(new Role() { Id = new Guid(),  Name = "Employee" });
+                //}
 
                 User user = new User();
                 user.FirstName = "Admin";
